@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="OutlookCalender.MainPage">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="200"/>
+            </Grid.ColumnDefinitions>
+            <Label Text="Login Name" Grid.Column="0" Margin="10"/>
+            <Entry Text="{Binding Loginhint}" Grid.Column="1" Margin="10"/>
+        </Grid>
+        <Button Grid.Row="1" 
+                Text="Sync with Outlook.com"        
+                Command="{Binding SyncCommand}" 
+                IsEnabled="{Binding SyncCommand.IsEnabled}"
+                Margin="10" />
+    </Grid>
+
+</ContentPage>
