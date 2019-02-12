@@ -1,6 +1,5 @@
 ﻿using OutlookCalender.Locator;
 using OutlookCalender.ViewModels;
-using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 

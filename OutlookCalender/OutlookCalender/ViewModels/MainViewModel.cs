@@ -16,8 +16,10 @@ namespace OutlookCalender.ViewModels
         public MainViewModel(ICalendarService calendarService)
         {
             _calendarService = calendarService;
-            SyncCommand = new RelayCommand(OnSyncCommand);
-            SyncCommand.IsEnabled = false;
+            SyncCommand = new RelayCommand(OnSyncCommand)
+            {
+                IsEnabled = false
+            };
         }
 
         private void OnLoginhintChanged(string oldvalue)

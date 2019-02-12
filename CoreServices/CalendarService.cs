@@ -1,7 +1,6 @@
 ﻿using Models;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using System.Linq.Expressions;
 
 namespace CoreServices
@@ -17,9 +16,9 @@ namespace CoreServices
             _repository = repository;
         }
 
-        public async Task<IList<EventModel>> GetEventModels(Expression<Func<EventModel, bool>> expression)
+        public List<EventModel> GetEventModels(Expression<Func<EventModel, bool>> expression)
         {
-            return await _repository.FindAll<EventModel>(expression);
+            return _repository.FindAll<EventModel>(expression);
         }
 
         public void Sync(string loginHint, DateTime startDate, DateTime endDate)

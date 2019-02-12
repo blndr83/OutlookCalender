@@ -1,59 +1,47 @@
 ﻿using Models;
-using NHibernate;
-using NHibernate.Tool.hbm2ddl;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace StorageProvider
 {
     public class Repository : IRepository
     {
-        private readonly ISession _session;
+        CalendarDbContext _calendarDbContext;
 
         public Repository()
         {
-            _session = DatabaseProvider.OpenSession();
-            var schemaUpdate = new SchemaUpdate(DatabaseProvider.Configuration);
-            schemaUpdate.Execute(Console.WriteLine, true);
+            _calendarDbContext = new CalendarDbContext();
         }
 
         public void Delete<T>(T entity) where T : Entity
         {
-            using (var transaction = _session.BeginTransaction())
-            {
-                _session.Delete(entity);
-                transaction.Commit();
-            }
+            _calendarDbContext.Remove(entity);
+            _calendarDbContext.SaveChanges();
         }
 
         public T Find<T>(Expression<Func<T,bool>> expression) where T : Entity
         {
-                return _session.QueryOver<T>().Where(expression).SingleOrDefault();
+            return _calendarDbContext.Set<T>().AsQueryable().FirstOrDefault(expression);
         }
 
-        public async Task<IList<T>> FindAll<T>(Expression<Func<T, bool>> expression) where T : Entity
+        public List<T> FindAll<T>(Expression<Func<T, bool>> expression) where T : Entity
         {
-            return await _session.QueryOver<T>().Where(expression).ListAsync();
+            return _calendarDbContext.Set<T>().AsQueryable().Where(expression).ToList();
         }
 
         public void Save<T>(T entity) where T : Entity
         {
-            using (var transaction = _session.BeginTransaction())
-            {
-                _session.Save(entity);
-                transaction.Commit();
-            }
+            _calendarDbContext.Add(entity);
+            _calendarDbContext.SaveChanges();
         }
 
         public void Update<T>(T entity) where T : Entity
         {
-            using (var transaction = _session.BeginTransaction())
-            {
-                _session.Update(entity);
-                transaction.Commit();
-            }
+            _calendarDbContext.Update(entity);
+            _calendarDbContext.SaveChanges();
            
         }
     }

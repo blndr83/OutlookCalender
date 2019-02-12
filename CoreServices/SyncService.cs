@@ -71,8 +71,17 @@ namespace CoreServices
                 {
                     var eventModel = _repository.Find<EventModel>((e) => e.Start.Equals(_.Start)
                     && e.End.Equals(_.End) && e.Subject.Equals(_.Subject));
-                    if (eventModel == null) _repository.Save(_);
-                    else eventModel.Update(_);
+                    if (eventModel == null)
+                    {
+                        var entity = _;
+                        entity.Id = Guid.NewGuid();
+                        _repository.Save(entity);
+                    }
+                    else
+                    {
+                        eventModel.Update(_);
+                        _repository.Update(eventModel);
+                    }
                 });
             }
         }
