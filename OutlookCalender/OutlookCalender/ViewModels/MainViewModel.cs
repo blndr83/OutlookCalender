@@ -3,6 +3,8 @@ using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using Xamarin.Forms;
+using Common;
+using System.Linq;
 
 namespace OutlookCalender.ViewModels
 {
@@ -45,8 +47,15 @@ namespace OutlookCalender.ViewModels
 
         private void OnSearchValueChanged(string oldValue)
         {
-            
+           var events =  _calendarService.GetEventModels((e) => e.Subject.Contains(_searchValue)
+            || e.BodyContent.RemoveHtmlTags().Contains(_searchValue));
+            if(events.Any())
+            {
+                
+            }
         }
+
+
 
         private void OnLoginhintChanged(string oldvalue)
         {
