@@ -12,8 +12,7 @@ namespace StorageProvider
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            var dbPath = "Calendar.db";
-            optionsBuilder.UseSqlite($"Data Source={dbPath}");
+            optionsBuilder.UseSqlite("Data Source=Calendar.db");
         }
 
         public DbSet<EventModel> Events { get; set; }
