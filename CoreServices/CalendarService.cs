@@ -10,10 +10,18 @@ namespace CoreServices
         private readonly ISyncService _syncService;
         private readonly IRepository _repository;
 
+        public Action SyncDone { get; set; }
+
         public CalendarService(ISyncService syncService, IRepository repository)
         {
             _syncService = syncService;
             _repository = repository;
+            _syncService.SyncDone = OnSyncDone;
+        }
+
+        private void OnSyncDone()
+        {
+            SyncDone?.Invoke();
         }
 
         public List<EventModel> GetEventModels(Expression<Func<EventModel, bool>> expression)

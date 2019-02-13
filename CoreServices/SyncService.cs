@@ -13,6 +13,8 @@ namespace CoreServices
         private GraphServiceClient _client;
         private readonly IClientService _clientService;
 
+        public Action SyncDone { get; set; }
+
         public SyncService(IRepository repository, IClientService clientService)
         {
             _repository = repository;
@@ -73,13 +75,14 @@ namespace CoreServices
                     var eventModel = _repository.Find<EventModel>((e) => e.Start.Equals(_.Start)
                     && e.End.Equals(_.End) && e.Subject.Equals(_.Subject));
                     if (eventModel == null) _repository.Save(_);
-                    else
+                    else if(!_.BodyContent.Equals(eventModel.BodyContent))
                     {
                         eventModel.Update(_);
                         _repository.Update(eventModel);
                     }
                 });
             }
+            SyncDone?.Invoke();
         }
     }
 }
