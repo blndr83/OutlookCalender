@@ -5,6 +5,8 @@ namespace StorageProvider
 {
     public class CalendarDbContext : DbContext
     {
+        public static string DbPath { get; set; }
+        public const string DB = "Calendar.db";
         public CalendarDbContext()
         {
             Database.EnsureCreated();
@@ -12,7 +14,8 @@ namespace StorageProvider
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite("Data Source=Calendar.db");
+            var datasource = string.IsNullOrEmpty(DbPath) ? DB : DbPath;
+            optionsBuilder.UseSqlite($"Data Source={datasource}");
         }
 
         public DbSet<EventModel> Events { get; set; }
