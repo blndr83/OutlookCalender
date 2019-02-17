@@ -15,6 +15,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StorageProvider", "StorageP
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "Common\Common.csproj", "{8F540E9D-4C98-4B63-9311-12D1EF5DCAA4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OutlookCalender.Android", "OutlookCalender\OutlookCalender.Android\OutlookCalender.Android.csproj", "{6333876E-55C8-4D7C-8817-9863970997D6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -151,6 +153,36 @@ Global
 		{8F540E9D-4C98-4B63-9311-12D1EF5DCAA4}.Release|x64.Build.0 = Release|Any CPU
 		{8F540E9D-4C98-4B63-9311-12D1EF5DCAA4}.Release|x86.ActiveCfg = Release|Any CPU
 		{8F540E9D-4C98-4B63-9311-12D1EF5DCAA4}.Release|x86.Build.0 = Release|Any CPU
+		{6333876E-55C8-4D7C-8817-9863970997D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6333876E-55C8-4D7C-8817-9863970997D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6333876E-55C8-4D7C-8817-9863970997D6}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{6333876E-55C8-4D7C-8817-9863970997D6}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{6333876E-55C8-4D7C-8817-9863970997D6}.Debug|ARM.Build.0 = Debug|Any CPU
+		{6333876E-55C8-4D7C-8817-9863970997D6}.Debug|ARM.Deploy.0 = Debug|Any CPU
+		{6333876E-55C8-4D7C-8817-9863970997D6}.Debug|ARM64.ActiveCfg = Debug|Any CPU
+		{6333876E-55C8-4D7C-8817-9863970997D6}.Debug|ARM64.Build.0 = Debug|Any CPU
+		{6333876E-55C8-4D7C-8817-9863970997D6}.Debug|ARM64.Deploy.0 = Debug|Any CPU
+		{6333876E-55C8-4D7C-8817-9863970997D6}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{6333876E-55C8-4D7C-8817-9863970997D6}.Debug|x64.Build.0 = Debug|Any CPU
+		{6333876E-55C8-4D7C-8817-9863970997D6}.Debug|x64.Deploy.0 = Debug|Any CPU
+		{6333876E-55C8-4D7C-8817-9863970997D6}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{6333876E-55C8-4D7C-8817-9863970997D6}.Debug|x86.Build.0 = Debug|Any CPU
+		{6333876E-55C8-4D7C-8817-9863970997D6}.Debug|x86.Deploy.0 = Debug|Any CPU
+		{6333876E-55C8-4D7C-8817-9863970997D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6333876E-55C8-4D7C-8817-9863970997D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6333876E-55C8-4D7C-8817-9863970997D6}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{6333876E-55C8-4D7C-8817-9863970997D6}.Release|ARM.ActiveCfg = Release|Any CPU
+		{6333876E-55C8-4D7C-8817-9863970997D6}.Release|ARM.Build.0 = Release|Any CPU
+		{6333876E-55C8-4D7C-8817-9863970997D6}.Release|ARM.Deploy.0 = Release|Any CPU
+		{6333876E-55C8-4D7C-8817-9863970997D6}.Release|ARM64.ActiveCfg = Release|Any CPU
+		{6333876E-55C8-4D7C-8817-9863970997D6}.Release|ARM64.Build.0 = Release|Any CPU
+		{6333876E-55C8-4D7C-8817-9863970997D6}.Release|ARM64.Deploy.0 = Release|Any CPU
+		{6333876E-55C8-4D7C-8817-9863970997D6}.Release|x64.ActiveCfg = Release|Any CPU
+		{6333876E-55C8-4D7C-8817-9863970997D6}.Release|x64.Build.0 = Release|Any CPU
+		{6333876E-55C8-4D7C-8817-9863970997D6}.Release|x64.Deploy.0 = Release|Any CPU
+		{6333876E-55C8-4D7C-8817-9863970997D6}.Release|x86.ActiveCfg = Release|Any CPU
+		{6333876E-55C8-4D7C-8817-9863970997D6}.Release|x86.Build.0 = Release|Any CPU
+		{6333876E-55C8-4D7C-8817-9863970997D6}.Release|x86.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
