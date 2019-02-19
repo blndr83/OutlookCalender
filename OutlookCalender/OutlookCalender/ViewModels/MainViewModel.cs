@@ -60,8 +60,8 @@ namespace OutlookCalender.ViewModels
             else
             {
                 var searchValue = _searchValue.ToLower();
-                var events = _calendarService.GetEventModels((e) => e.Subject.ToLower().Contains(searchValue)
-                || e.BodyContent.RemoveHtmlTags().ToLower().Contains(searchValue));
+                var events = _calendarService.GetEventModels((e) => (!string.IsNullOrEmpty(e.Subject) && e.Subject.ToLower().Contains(searchValue))
+                || (!string.IsNullOrEmpty(e.BodyContent) && e.BodyContent.RemoveHtmlTags().ToLower().Contains(searchValue)));
                 SearchResultListVisible = events.Any();
 
                 if (_searchResultListVisible)

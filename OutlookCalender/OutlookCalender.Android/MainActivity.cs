@@ -4,6 +4,7 @@ using Android.Content.PM;
 using Android.OS;
 using StorageProvider;
 using System.IO;
+using Microsoft.Identity.Client;
 
 namespace OutlookCalender.Droid
 {
@@ -23,6 +24,7 @@ namespace OutlookCalender.Droid
             base.OnCreate(savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             LoadApplication(new App());
+            App.UiParent = new UIParent(this);
         }
     }
 }

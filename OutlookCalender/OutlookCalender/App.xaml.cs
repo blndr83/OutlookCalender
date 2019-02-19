@@ -1,7 +1,9 @@
-﻿using OutlookCalender.Locator;
+﻿using CoreServices;
+using OutlookCalender.Locator;
 using OutlookCalender.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using Microsoft.Identity.Client;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace OutlookCalender
@@ -9,6 +11,7 @@ namespace OutlookCalender
     public partial class App : Application
     {
         private ViewModelLocator _viewModelLocator;
+        public static UIParent UiParent { set { UiParentProvider.UiParent = value; } }
 
         public App()
         {

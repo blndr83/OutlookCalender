@@ -22,13 +22,12 @@ namespace CoreServices
             var authority = "https://login.microsoftonline.com/consumers";
             _client = new PublicClientApplication(appId, authority);
 
-
         }
 
         private async Task<AuthenticationResult> GetAuthenticationAsync(string loginHint)
         {
             var scopes = OAuth.Scope.Split(' ');
-            return await _client.AcquireTokenAsync(scopes, loginHint);
+            return await _client.AcquireTokenAsync(scopes, loginHint, UiParentProvider.UiParent);
         }
 
         public async Task<GraphServiceClient> GraphServiceClient(string loginHint)
