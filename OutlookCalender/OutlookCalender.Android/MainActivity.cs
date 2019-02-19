@@ -5,6 +5,7 @@ using Android.OS;
 using StorageProvider;
 using System.IO;
 using Microsoft.Identity.Client;
+using Android.Content;
 
 namespace OutlookCalender.Droid
 {
@@ -25,6 +26,12 @@ namespace OutlookCalender.Droid
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             LoadApplication(new App());
             App.UiParent = new UIParent(this);
+        }
+
+        protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
+        {
+            base.OnActivityResult(requestCode, resultCode, data);
+            AuthenticationContinuationHelper.SetAuthenticationContinuationEventArgs(requestCode, resultCode, data);
         }
     }
 }
