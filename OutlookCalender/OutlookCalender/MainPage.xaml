@@ -8,73 +8,64 @@
             <local:HtmlSourceConverter x:Key="htmlSource"/>
         </ResourceDictionary>
     </ContentPage.Resources>
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <Grid Grid.Row="0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="200"/>
-            </Grid.ColumnDefinitions>
-            <Label Text="Login Name" Grid.Column="0" Margin="5"/>
-            <Entry Text="{Binding Loginhint}" IsEnabled="{Binding LoginHintEnabled}" Grid.Column="1" Margin="5"/>
-        </Grid>
-        <Grid Grid.Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
-            <Label Text="Start Date" Grid.Column="0" Margin="5"/>
-            <DatePicker Date="{Binding StartDate}" Grid.Column="1" Margin="5"/>
-        </Grid>
-        <Grid Grid.Row="2">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
-            <Label Text="End Date" Grid.Column="0" Margin="5"/>
-            <DatePicker Date="{Binding EndDate}" Grid.Column="1" Margin="5"/>
-        </Grid>
-        <Button Grid.Row="3" 
+    <ScrollView>
+        <Grid RowSpacing="10" Padding="10,10,10,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0" ColumnSpacing="10" RowSpacing="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Label Text="Login Name" Grid.Row="0" Grid.Column="0"/>
+                <Entry Text="{Binding Loginhint}" IsEnabled="{Binding LoginHintEnabled}" Grid.Row="0" Grid.Column="1"/>
+                <Label Text="Start Date" Grid.Column="0" Grid.Row="1"/>
+                <DatePicker Date="{Binding StartDate}" Grid.Column="1" Grid.Row="1"/>
+                <Label Text="End Date" Grid.Column="0" Grid.Row="2"/>
+                <DatePicker Date="{Binding EndDate}" Grid.Column="1" Grid.Row="2"/>
+            </Grid>
+            <Button Grid.Row="1" 
                 Text="Sync with Outlook.com"        
                 Command="{Binding SyncCommand}" 
-                IsEnabled="{Binding SyncCommand.IsEnabled}"
-                Margin="5" />
-        <SearchBar Text="{Binding SearchValue}" Grid.Row="4" Margin="5"/>
-        <ListView Grid.Row="5" IsVisible="{Binding SearchResultListVisible}" Margin="5" ItemsSource="{Binding SearchResults}">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <ViewCell>
-                        <StackLayout Orientation="Vertical">
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
-                                <Label Text="Start Date" Grid.Row="0" Grid.Column="0" Margin="5"/>
-                                <Label Text="End Date" Grid.Row="0" Grid.Column="1" Margin="5"/>
-                                <Label Text="Subject" Grid.Row="0" Grid.Column="2" Margin="5"/>
-                                <Label Text="{Binding Start}" Grid.Row="1" Grid.Column="0" Margin="5"/>
-                                <Label Text="{Binding End}" Grid.Row="1" Grid.Column="1" Margin="5"/>
-                                <Label Text="{Binding Subject}" Grid.Row="1" Grid.Column="2" Margin="5"/>
-                            </Grid>
-                            <WebView Margin="5" Source="{Binding BodyContent, Converter={StaticResource htmlSource}}" WidthRequest="200" HeightRequest="25" />
-                        </StackLayout>
-                    </ViewCell>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-    </Grid>
-
+                IsEnabled="{Binding SyncCommand.IsEnabled}"/>
+            <SearchBar Text="{Binding SearchValue}" Grid.Row="2"/>
+            <ListView Grid.Row="3" IsVisible="{Binding SearchResultListVisible}" ItemsSource="{Binding SearchResults}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Orientation="Vertical">
+                                <Grid RowSpacing="10" ColumnSpacing="10">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Label Text="Start Date" Grid.Row="0" Grid.Column="0"/>
+                                    <Label Text="End Date" Grid.Row="0" Grid.Column="1" />
+                                    <Label Text="Subject" Grid.Row="0" Grid.Column="2" />
+                                    <Label Text="{Binding Start}" Grid.Row="1" Grid.Column="0"/>
+                                    <Label Text="{Binding End}" Grid.Row="1" Grid.Column="1" />
+                                    <Label Text="{Binding Subject}" Grid.Row="1" Grid.Column="2"/>
+                                </Grid>
+                                <WebView Margin="5" Source="{Binding BodyContent, Converter={StaticResource htmlSource}}" WidthRequest="200" HeightRequest="25" />
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+    </ScrollView>
 </ContentPage>
