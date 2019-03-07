@@ -22,19 +22,33 @@ namespace OutlookCalender.ViewModels
             var eventProperities = @event.GetType().GetProperties();
             var searchResultProperties = searchResult.GetType().GetProperties();
             eventProperities.ToList().ForEach(_ => searchResultProperties.FirstOrDefault(s => s.Name.Equals(_.Name))?.SetValue(searchResult, _.GetValue(@event)));
-            if(!string.IsNullOrEmpty(searchResult.BodyContent))
+            SetBodyContentSearchMatch(searchResult, searchValue);
+
+            return searchResult;
+        }
+
+        private static void SetBodyContentSearchMatch(SearchResult searchResult, string searchValue)
+        {
+            if (!string.IsNullOrEmpty(searchResult.BodyContent))
             {
                 var bodyContentWithoutHtml = searchResult.BodyContent.RemoveHtmlTags().Replace(Environment.NewLine, "");
-                if(bodyContentWithoutHtml.ToLower().Contains(searchValue))
+                if (bodyContentWithoutHtml.ToLower().Contains(searchValue))
                 {
                     var indexOfSearchMatch = bodyContentWithoutHtml.ToLower().IndexOf(searchValue);
                     var startIndex = indexOfSearchMatch - 20 < 0 ? indexOfSearchMatch : indexOfSearchMatch - 20;
+                    for (var i = startIndex; i > 0; i--)
+                    {
+                        if (bodyContentWithoutHtml[i].Equals(' '))
+                        {
+                            startIndex = i;
+                            break;
+                        }
+                    }
                     var length = startIndex + 60 < bodyContentWithoutHtml.Length - 1 ? startIndex + 60 : bodyContentWithoutHtml.Length - 1;
                     var threeDots = startIndex > 0 ? "..." : string.Empty;
-                    searchResult.BodyContentSearchMatch = $"{threeDots}{bodyContentWithoutHtml.Substring(startIndex, length -startIndex)}...";
+                    searchResult.BodyContentSearchMatch = $"{threeDots}{bodyContentWithoutHtml.Substring(startIndex, length - startIndex)}...";
                 }
             }
-            return searchResult;
         }
     }
 }
