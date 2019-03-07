@@ -7,7 +7,8 @@ namespace Common
     {
         public static string RemoveHtmlTags(this string stringValue)
         {
-            return Regex.Replace(stringValue, "<.*?>", String.Empty);
+            var text = System.Net.WebUtility.HtmlDecode(stringValue);
+            return Regex.Replace(text, "<.*?>", String.Empty);
         }
         
     }

@@ -60,7 +60,7 @@
                                     <Label Text="{Binding End}" Grid.Row="1" Grid.Column="1" />
                                     <Label Text="{Binding Subject}" Grid.Row="1" Grid.Column="2"/>
                                 </Grid>
-                                <WebView Margin="5" Source="{Binding BodyContent, Converter={StaticResource htmlSource}}" WidthRequest="200" HeightRequest="25" />
+                                <Label Margin="5" Text="{Binding BodyContentSearchMatch}"  />
                             </StackLayout>
                         </ViewCell>
                     </DataTemplate>

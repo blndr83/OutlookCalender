@@ -18,7 +18,7 @@ namespace OutlookCalender.ViewModels
         private DateTime _endDate;
         private string _searchValue;
         private bool _loginHintEnabled;
-        private ObservableCollection<EventModel> _searchResultsInternal;
+        private ObservableCollection<SearchResult> _searchResultsInternal;
         private bool _searchResultListVisible;
 
         public RelayCommand SyncCommand { get; }
@@ -27,7 +27,7 @@ namespace OutlookCalender.ViewModels
         public DateTime EndDate { get { return _endDate; } set { SetBackingField(ref _endDate, value); } }
         public string SearchValue { get { return _searchValue; } set { SetBackingField(ref _searchValue, value, OnSearchValueChanged); } }
         public bool LoginHintEnabled { get { return _loginHintEnabled; } private set { SetBackingField(ref _loginHintEnabled, value); } }
-        public ReadOnlyObservableCollection<EventModel> SearchResults { get; }
+        public ReadOnlyObservableCollection<SearchResult> SearchResults { get; }
         public bool SearchResultListVisible { get { return _searchResultListVisible; } private set { SetBackingField(ref _searchResultListVisible, value); } }
 
         public MainViewModel(ICalendarService calendarService)
@@ -41,8 +41,8 @@ namespace OutlookCalender.ViewModels
             EndDate = DateTime.Today.AddDays(30);
             _calendarService.SyncDone = OnSyncDone;
             LoginHintEnabled = true;
-            _searchResultsInternal = new ObservableCollection<EventModel>();
-            SearchResults = new ReadOnlyObservableCollection<EventModel>(_searchResultsInternal);
+            _searchResultsInternal = new ObservableCollection<SearchResult>();
+            SearchResults = new ReadOnlyObservableCollection<SearchResult>(_searchResultsInternal);
         }
 
         private void OnSyncDone()
@@ -66,7 +66,7 @@ namespace OutlookCalender.ViewModels
 
                 if (_searchResultListVisible)
                 {
-                    events.OrderByDescending(e => e.Start).ToList().ForEach(_ => _searchResultsInternal.Add(_));
+                    events.OrderByDescending(e => e.Start).ToList().ForEach(_ => _searchResultsInternal.Add(SearchResult.FromEvent(_, searchValue)));
 
                 }
             }
