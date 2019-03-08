@@ -36,19 +36,31 @@ namespace OutlookCalender.ViewModels
                 {
                     var indexOfSearchMatch = bodyContentWithoutHtml.ToLower().IndexOf(searchValue);
                     var startIndex = indexOfSearchMatch - 20 < 0 ? indexOfSearchMatch : indexOfSearchMatch - 20;
+                    if (startIndex < 20) startIndex = 0;
+                    bool condition(char c) { return c.Equals(' ') || c.Equals('.') || c.Equals(',') || c.Equals(';') || c.Equals(':'); }
                     for (var i = startIndex; i > 0; i--)
                     {
-                        if (bodyContentWithoutHtml[i].Equals(' '))
+                        if (condition(bodyContentWithoutHtml[i]))
                         {
                             startIndex = i;
                             break;
                         }
                     }
                     var length = startIndex + 60 < bodyContentWithoutHtml.Length - 1 ? startIndex + 60 : bodyContentWithoutHtml.Length - 1;
+                    for(var i=length; i < bodyContentWithoutHtml.Length; i++)
+                    {
+                        if (condition(bodyContentWithoutHtml[i]))
+                        {
+                            length = i;
+                            break;
+                        }
+                    }
+
                     var threeDots = startIndex > 0 ? "..." : string.Empty;
                     searchResult.BodyContentSearchMatch = $"{threeDots}{bodyContentWithoutHtml.Substring(startIndex, length - startIndex)}...";
                 }
             }
         }
+        
     }
 }
