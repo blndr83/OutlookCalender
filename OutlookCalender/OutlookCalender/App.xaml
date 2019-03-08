@@ -28,6 +28,13 @@
                     </Setter.Value>
                 </Setter>
             </Style>
+            <Style x:Key="listViewLabelStyle" TargetType="Label">
+                <Setter Property="FontSize">
+                    <Setter.Value>
+                        <OnIdiom Phone="Micro" Tablet="Default" Desktop="Default"/>
+                    </Setter.Value>
+                </Setter>
+            </Style>
         </ResourceDictionary>
     </Application.Resources>
 </Application>
