@@ -1,7 +1,5 @@
 ﻿using Models;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Linq;
 using Common;
 
@@ -46,7 +44,7 @@ namespace OutlookCalender.ViewModels
                             break;
                         }
                     }
-                    var length = startIndex + 60 < bodyContentWithoutHtml.Length - 1 ? startIndex + 60 : bodyContentWithoutHtml.Length - 1;
+                    var length = startIndex + 40 < bodyContentWithoutHtml.Length - 1 ? startIndex + 40 : bodyContentWithoutHtml.Length - 1;
                     for(var i=length; i < bodyContentWithoutHtml.Length; i++)
                     {
                         if (condition(bodyContentWithoutHtml[i]))
@@ -57,7 +55,8 @@ namespace OutlookCalender.ViewModels
                     }
 
                     var threeDots = startIndex > 0 ? "..." : string.Empty;
-                    searchResult.BodyContentSearchMatch = $"{threeDots}{bodyContentWithoutHtml.Substring(startIndex, length - startIndex)}...";
+                    var threeDotsAtTheEnd = length < bodyContentWithoutHtml.Length - 1 ? "..." : string.Empty;
+                    searchResult.BodyContentSearchMatch = $"{threeDots}{bodyContentWithoutHtml.Substring(startIndex, length - startIndex)}{threeDotsAtTheEnd}";
                 }
             }
         }

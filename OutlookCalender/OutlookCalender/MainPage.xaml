@@ -38,7 +38,7 @@
                 Command="{Binding SyncCommand}" 
                 IsEnabled="{Binding SyncCommand.IsEnabled}"/>
             <SearchBar Text="{Binding SearchValue}" Grid.Row="2"/>
-            <ListView Grid.Row="3" IsVisible="{Binding SearchResultListVisible}" ItemsSource="{Binding SearchResults}">
+            <ListView Grid.Row="3" IsVisible="{Binding SearchResultListVisible}" VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand" ItemsSource="{Binding SearchResults}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
