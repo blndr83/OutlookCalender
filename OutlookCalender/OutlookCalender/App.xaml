@@ -3,6 +3,31 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="OutlookCalender.App">
     <Application.Resources>
-
+        <ResourceDictionary>
+            <Style x:Key="gridStyle" TargetType="Grid">
+                <Setter Property="RowSpacing">
+                    <Setter.Value>
+                        <OnIdiom Phone="1" Tablet="10" Desktop="10"/>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="ColumnSpacing">
+                    <Setter.Value>
+                        <OnIdiom Phone="3" Tablet="10" Desktop="10"/>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style x:Key="listViewGridStyle" TargetType="Grid">
+                <Setter Property="RowSpacing">
+                    <Setter.Value>
+                        <OnIdiom Phone="1" Tablet="5" Desktop="5"/>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="ColumnSpacing">
+                    <Setter.Value>
+                        <OnIdiom Phone="3" Tablet="10" Desktop="10"/>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>
