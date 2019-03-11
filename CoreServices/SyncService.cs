@@ -1,4 +1,5 @@
 ﻿using Microsoft.Graph;
+using Microsoft.Identity.Client;
 using Models;
 using System;
 using System.Collections.Generic;
@@ -67,22 +68,30 @@ namespace CoreServices
 
         public async void Sync(string loginHint, DateTime startDate, DateTime endDate)
         {
-            var calendarEvents = await GetEventsAsync(loginHint, startDate, endDate);
-            if(calendarEvents.Any())
+            try
             {
-                calendarEvents.ForEach(_ =>
+                var calendarEvents = await GetEventsAsync(loginHint, startDate, endDate);
+                if (calendarEvents.Any())
                 {
-                    var eventModel = _repository.Find<EventModel>((e) => e.Start.Equals(_.Start)
-                    && e.End.Equals(_.End) && e.Subject.Equals(_.Subject));
-                    if (eventModel == null) _repository.Save(_);
-                    else if(!_.BodyContent.Equals(eventModel.BodyContent))
+                    calendarEvents.ForEach(_ =>
                     {
-                        eventModel.Update(_);
-                        _repository.Update(eventModel);
-                    }
-                });
+                        var eventModel = _repository.Find<EventModel>((e) => e.Start.Equals(_.Start)
+                        && e.End.Equals(_.End) && e.Subject.Equals(_.Subject));
+                        if (eventModel == null) _repository.Save(_);
+                        else if (!_.BodyContent.Equals(eventModel.BodyContent))
+                        {
+                            eventModel.Update(_);
+                            _repository.Update(eventModel);
+                        }
+                    });
+                }
+                SyncDone?.Invoke();
             }
-            SyncDone?.Invoke();
+            catch (MsalClientException)
+            {
+                SyncDone?.Invoke();
+            }
+
         }
     }
 }
