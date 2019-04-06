@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace CoreServices
 {
@@ -9,7 +10,7 @@ namespace CoreServices
     {
         void Sync(string loginHint, DateTime startDate, DateTime endDate);
 
-        List<EventModel> GetEventModels(Expression<Func<EventModel, bool>> expression);
+        Task<List<EventModel>> GetEventModels(Expression<Func<EventModel, bool>> expression);
         Action SyncDone { get; set; }
     }
 }

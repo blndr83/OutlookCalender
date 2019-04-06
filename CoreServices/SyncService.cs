@@ -4,6 +4,7 @@ using Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace CoreServices
@@ -87,7 +88,7 @@ namespace CoreServices
                 }
                 SyncDone?.Invoke();
             }
-            catch (MsalClientException)
+            catch (Exception ex) when (ex is HttpRequestException || ex is MsalClientException)
             {
                 SyncDone?.Invoke();
             }

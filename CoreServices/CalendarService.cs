@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace CoreServices
 {
@@ -24,9 +25,9 @@ namespace CoreServices
             SyncDone?.Invoke();
         }
 
-        public List<EventModel> GetEventModels(Expression<Func<EventModel, bool>> expression)
+        public async Task<List<EventModel>> GetEventModels(Expression<Func<EventModel, bool>> expression)
         {
-            return _repository.FindAll<EventModel>(expression);
+            return await _repository.FindAll<EventModel>(expression);
         }
 
         public void Sync(string loginHint, DateTime startDate, DateTime endDate)

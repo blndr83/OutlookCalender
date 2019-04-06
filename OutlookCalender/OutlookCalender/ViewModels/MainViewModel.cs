@@ -53,14 +53,14 @@ namespace OutlookCalender.ViewModels
             });
         }
 
-        private void OnSearchValueChanged(string oldValue)
+        private async void OnSearchValueChanged(string oldValue)
         {
             _searchResultsInternal.Clear();
             if (string.IsNullOrWhiteSpace(_searchValue)) SearchResultListVisible = false;
             else
             {
                 var searchValue = _searchValue.ToLower();
-                var events = _calendarService.GetEventModels((e) => (!string.IsNullOrEmpty(e.Subject) && e.Subject.ToLower().Contains(searchValue))
+                var events = await _calendarService.GetEventModels((e) => (!string.IsNullOrEmpty(e.Subject) && e.Subject.ToLower().Contains(searchValue))
                 || (!string.IsNullOrEmpty(e.BodyContent) && e.BodyContent.RemoveHtmlTags().ToLower().Contains(searchValue)));
                 SearchResultListVisible = events.Any();
 

@@ -2,8 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace StorageProvider
 {
@@ -24,12 +25,13 @@ namespace StorageProvider
 
         public T Find<T>(Expression<Func<T,bool>> expression) where T : Entity
         {
+            
             return _calendarDbContext.Set<T>().AsQueryable().FirstOrDefault(expression);
         }
 
-        public List<T> FindAll<T>(Expression<Func<T, bool>> expression) where T : Entity
+        public async Task<List<T>> FindAll<T>(Expression<Func<T, bool>> expression) where T : Entity
         {
-            return _calendarDbContext.Set<T>().AsQueryable().Where(expression).ToList();
+            return await _calendarDbContext.Set<T>().AsQueryable().Where(expression).ToListAsync();
         }
 
         public void Save<T>(T entity) where T : Entity
