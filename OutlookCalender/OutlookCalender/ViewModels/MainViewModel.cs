@@ -29,6 +29,7 @@ namespace OutlookCalender.ViewModels
         public bool LoginHintEnabled { get { return _loginHintEnabled; } private set { SetBackingField(ref _loginHintEnabled, value); } }
         public ReadOnlyObservableCollection<SearchResult> SearchResults { get; }
         public bool SearchResultListVisible { get { return _searchResultListVisible; } private set { SetBackingField(ref _searchResultListVisible, value); } }
+        public RelayCommand SearchCommand { get; }
 
         public MainViewModel(ICalendarService calendarService)
         {
@@ -43,6 +44,7 @@ namespace OutlookCalender.ViewModels
             LoginHintEnabled = true;
             _searchResultsInternal = new ObservableCollection<SearchResult>();
             SearchResults = new ReadOnlyObservableCollection<SearchResult>(_searchResultsInternal);
+            SearchCommand = new RelayCommand(OnSearchCommand);
         }
 
         private void OnSyncDone()
@@ -53,7 +55,15 @@ namespace OutlookCalender.ViewModels
             });
         }
 
-        private async void OnSearchValueChanged(string oldValue)
+        private void OnSearchValueChanged(string oldValue)
+        {
+            if (string.IsNullOrWhiteSpace(_searchValue)) {
+                _searchResultsInternal.Clear();
+                SearchResultListVisible = false;
+            }
+        }
+
+        private async void OnSearchCommand()
         {
             _searchResultsInternal.Clear();
             if (string.IsNullOrWhiteSpace(_searchValue)) SearchResultListVisible = false;
