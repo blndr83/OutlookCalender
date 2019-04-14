@@ -7,11 +7,12 @@ namespace OutlookCalender.ViewModels
 {
     public class SearchResult
     {
-        public Guid Id { get; private set; }
+        public string Id { get; private set; }
         public DateTime Start { get; private set; }
         public DateTime End { get; private set; }
         public string Subject { get; private set; }
         public string BodyContent { get; private set; }
+        public string LocationDisplayName { get; private set; }
         public string BodyContentSearchMatch { get; private set; }
 
         public static SearchResult FromEvent(EventModel @event, string searchValue)

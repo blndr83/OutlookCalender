@@ -44,14 +44,14 @@ namespace CoreServices
 
                 calendarView.ToList().ForEach(c =>
                 {
-
                     events.Add(new EventModel
                     {
-                        Id = Guid.NewGuid(),
+                        Id = c.Id,
                         BodyContent = c.Body.Content,
                         Subject = c.Subject,
                         Start = DateTime.Parse(c.Start.DateTime),
-                        End = DateTime.Parse(c.End.DateTime)
+                        End = DateTime.Parse(c.End.DateTime),
+                        LocationDisplayName = c.Location.DisplayName
                     });
                 });
                 var nextStartDate = startDate.AddDays(7);
@@ -76,8 +76,7 @@ namespace CoreServices
                 {
                     calendarEvents.ForEach(_ =>
                     {
-                        var eventModel = _repository.Find<EventModel>((e) => e.Start.Equals(_.Start)
-                        && e.End.Equals(_.End) && e.Subject.Equals(_.Subject));
+                        var eventModel = _repository.Find<EventModel>((e) => e.Id.Equals(_.Id));
                         if (eventModel == null) _repository.Save(_);
                         else if (!_.BodyContent.Equals(eventModel.BodyContent))
                         {

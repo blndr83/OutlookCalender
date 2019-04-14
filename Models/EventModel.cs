@@ -4,15 +4,18 @@ namespace Models
 {
     public class EventModel : Entity
     {
-        public virtual Guid Id { get; set; }
-        public virtual DateTime Start { get; set; }
-        public virtual DateTime End { get; set; }
-        public virtual string Subject { get; set; }
-        public virtual string BodyContent { get; set; }
+        public  string Id { get; set; }
+        public  DateTime Start { get; set; }
+        public  DateTime End { get; set; }
+        public  string Subject { get; set; }
+        public  string BodyContent { get; set; }
+        public string LocationDisplayName { get; set; }
 
-        public virtual void Update(EventModel eventModel)
+        public  void Update(EventModel eventModel)
         {
             BodyContent = eventModel.BodyContent;
+            Subject = eventModel.Subject;
+            LocationDisplayName = eventModel.LocationDisplayName;
         }
     }
 }
