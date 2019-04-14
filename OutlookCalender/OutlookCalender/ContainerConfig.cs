@@ -3,15 +3,17 @@ using CoreServices;
 using Models;
 using OutlookCalender.ViewModels;
 using StorageProvider;
+using System;
 
 namespace OutlookCalender
 {
     public class ContainerConfig
     {
-        public static IContainer Configurate()
+        public static IContainer Configurate(Action<SearchResult> showSearchResult)
         {
             var builder = new ContainerBuilder();
 
+            builder.RegisterInstance(showSearchResult);
             builder.RegisterType<CalendarService>().As<ICalendarService>().SingleInstance();
             builder.RegisterType<ClientService>().As<IClientService>().SingleInstance();
             builder.RegisterType<MainViewModel>().SingleInstance();

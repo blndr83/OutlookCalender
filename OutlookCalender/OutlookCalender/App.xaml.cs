@@ -15,11 +15,9 @@ namespace OutlookCalender
 
         public App()
         {
-            _viewModelLocator = new ViewModelLocator(ContainerConfig.Configurate());
+            _viewModelLocator = new ViewModelLocator(ContainerConfig.Configurate(ShowSearchDetailsPage));
             InitializeComponent();
-            var viewModel = _viewModelLocator.GetViewModel<MainViewModel>();
-            viewModel.ShowSearchDetailPage = ShowSearchDetailsPage;
-            MainPage = new NavigationPage(new MainPage { BindingContext = viewModel });        
+            MainPage = new NavigationPage(new MainPage { BindingContext = _viewModelLocator.GetViewModel<MainViewModel>() });        
         }
 
         private async void ShowSearchDetailsPage(SearchResult searchResult)
