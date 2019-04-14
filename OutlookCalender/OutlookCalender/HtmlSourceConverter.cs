@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Text;
 using Xamarin.Forms;
 
 namespace OutlookCalender
@@ -11,12 +9,7 @@ namespace OutlookCalender
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             var html = new HtmlWebViewSource();
-
-            if (value != null)
-            {
-                html.Html = value.ToString();
-            }
-
+            if (value != null && value is string) html.Html = System.Net.WebUtility.HtmlDecode(value as string);
             return html;
         }
 
