@@ -8,31 +8,27 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <Grid Grid.Row="0" Style="{StaticResource gridStyle}">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-                <Label Text="Login Name" VerticalOptions="Center" Grid.Row="0" Grid.Column="0"/>
-                <Entry Text="{Binding Loginhint}" IsEnabled="{Binding LoginHintEnabled}" Grid.Row="0" Grid.Column="1"/>
-                <Label Text="Start Date" VerticalOptions="Center" Grid.Column="0" Grid.Row="1"/>
-                <DatePicker Date="{Binding StartDate}" Grid.Column="1" Grid.Row="1"/>
-                <Label Text="End Date" Grid.Column="0" VerticalOptions="Center" Grid.Row="2"/>
-                <DatePicker Date="{Binding EndDate}" Grid.Column="1" Grid.Row="2"/>
-            </Grid>
-            <Button Grid.Row="1" 
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Label Text="Login Name" VerticalOptions="Center" Grid.Row="0" Grid.Column="0"/>
+            <Entry Text="{Binding Loginhint}" IsEnabled="{Binding LoginHintEnabled}" Grid.Row="0" Grid.Column="1"/>
+            <Label Text="Start Date" VerticalOptions="Center" Grid.Column="0" Grid.Row="1"/>
+            <DatePicker Date="{Binding StartDate}" Grid.Column="1" Grid.Row="1"/>
+            <Label Text="End Date" Grid.Column="0" VerticalOptions="Center" Grid.Row="2"/>
+            <DatePicker Date="{Binding EndDate}" Grid.Column="1" Grid.Row="2"/>
+            <Button Grid.Row="3" 
                 Text="Sync with Outlook.com"        
                 Command="{Binding SyncCommand}" 
-                IsEnabled="{Binding SyncCommand.IsEnabled}"/>
-            <SearchBar Text="{Binding SearchValue}" SearchCommand="{Binding SearchCommand}" Grid.Row="2"/>
-            <ListView Grid.Row="3" IsVisible="{Binding SearchResultListVisible}" VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand" ItemsSource="{Binding SearchResults}">
+                IsEnabled="{Binding SyncCommand.IsEnabled}"
+                Grid.ColumnSpan="2"/>
+            <SearchBar Text="{Binding SearchValue}" SearchCommand="{Binding SearchCommand}" Grid.Row="4" Grid.ColumnSpan="2"/>
+            <ListView Grid.Row="5" IsVisible="{Binding SearchResultListVisible}" VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand" ItemsSource="{Binding SearchResults}" SelectedItem="{Binding SelectedSearchResult}" Grid.ColumnSpan="2">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>

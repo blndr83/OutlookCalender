@@ -20,6 +20,7 @@ namespace OutlookCalender.ViewModels
         private bool _loginHintEnabled;
         private ObservableCollection<SearchResult> _searchResultsInternal;
         private bool _searchResultListVisible;
+        private SearchResult _selectedSearchResult;
 
         public RelayCommand SyncCommand { get; }
         public string Loginhint { get { return _loginhint; } set { SetBackingField(ref _loginhint, value, OnLoginhintChanged); } }
@@ -30,6 +31,8 @@ namespace OutlookCalender.ViewModels
         public ReadOnlyObservableCollection<SearchResult> SearchResults { get; }
         public bool SearchResultListVisible { get { return _searchResultListVisible; } private set { SetBackingField(ref _searchResultListVisible, value); } }
         public RelayCommand SearchCommand { get; }
+        public Action<SearchResult> ShowSearchDetailPage { get; set; }
+        public SearchResult SelectedSearchResult { get { return _selectedSearchResult; } set { SetBackingField(ref _selectedSearchResult, value, OnSelectedSearchResultChanged); } }
 
         public MainViewModel(ICalendarService calendarService)
         {
@@ -72,7 +75,7 @@ namespace OutlookCalender.ViewModels
                 var searchValue = _searchValue.ToLower();
                 var events = await _calendarService.GetEventModels((e) => (!string.IsNullOrEmpty(e.Subject) && e.Subject.ToLower().Contains(searchValue))
                 || (!string.IsNullOrEmpty(e.BodyContent) && e.BodyContent.RemoveHtmlTags().ToLower().Contains(searchValue))
-                || (!string.IsNullOrEmpty(e.LocationDisplayName) && e.LocationDisplayName.Contains(searchValue)));
+                || (!string.IsNullOrEmpty(e.LocationDisplayName) && e.LocationDisplayName.ToLower().Contains(searchValue)));
                 SearchResultListVisible = events.Any();
 
                 if (_searchResultListVisible)
@@ -84,7 +87,10 @@ namespace OutlookCalender.ViewModels
 
         }
 
-
+        private void OnSelectedSearchResultChanged(SearchResult oldvalue)
+        {
+            if (_selectedSearchResult != null) ShowSearchDetailPage(_selectedSearchResult);
+        }
 
         private void OnLoginhintChanged(string oldvalue)
         {

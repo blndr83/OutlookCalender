@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="OutlookCalender.SearchDetailPage">
+    <ContentPage.Content>
+        <ScrollView>
+            <Grid Style="{StaticResource gridStyle}" Padding="10,10,10,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Label Text="Start" Grid.Row="0" Grid.Column="0"/>
+                <Label Text="{Binding Start}" Grid.Row="0" Grid.Column="1"/>
+                <Label Text="End" Grid.Row="1" Grid.Column="0"/>
+                <Label Text="{Binding End}" Grid.Row="1" Grid.Column="1"/>
+                <Label Text="Location" Grid.Row="2" Grid.Column="0"/>
+                <Label Text="{Binding LocationDisplayName}" Grid.Row="2" Grid.Column="1"/>
+                <Label Text="Subject" Grid.Row="3" Grid.Column="0"/>
+                <Label Text="{Binding Subject}" Grid.Row="3" Grid.Column="1"/>
+                <Label Text="{Binding BodyContentDecoded}" Grid.Row="4" Grid.ColumnSpan="2"/>
+            </Grid>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

@@ -12,6 +12,7 @@ namespace OutlookCalender.ViewModels
         public DateTime End { get; private set; }
         public string Subject { get; private set; }
         public string BodyContent { get; private set; }
+        public string BodyContentDecoded { get; private set; }
         public string LocationDisplayName { get; private set; }
         public string BodyContentSearchMatch { get; private set; }
 
@@ -21,6 +22,7 @@ namespace OutlookCalender.ViewModels
             var eventProperities = @event.GetType().GetProperties();
             var searchResultProperties = searchResult.GetType().GetProperties();
             eventProperities.ToList().ForEach(_ => searchResultProperties.FirstOrDefault(s => s.Name.Equals(_.Name))?.SetValue(searchResult, _.GetValue(@event)));
+            searchResult.BodyContentDecoded = System.Net.WebUtility.HtmlDecode(@event.BodyContent);
             SetBodyContentSearchMatch(searchResult, searchValue);
 
             return searchResult;
