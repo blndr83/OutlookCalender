@@ -36,23 +36,14 @@
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-                                <Label Text="Start Date" Grid.Row="0" Grid.Column="0" Style="{StaticResource listViewLabelStyle}"/>
-                                <Label Text="End Date" Grid.Row="0" Grid.Column="1" Style="{StaticResource listViewLabelStyle}"/>
-                                <Label Text="Subject" Grid.Row="0" Grid.Column="2" Style="{StaticResource listViewLabelStyle}"/>
-                                <Label Text="{Binding Start}" Grid.Row="1" Grid.Column="0" Style="{StaticResource listViewLabelStyle}"/>
-                                <Label Text="{Binding End}" Grid.Row="1" Grid.Column="1" Style="{StaticResource listViewLabelStyle}"/>
-                                <Label Text="{Binding Subject}" Grid.Row="1" Grid.Column="2" Style="{StaticResource listViewLabelStyle}"/>
-                                <Label Text="Location" Grid.Row="2" Grid.Column="0" Style="{StaticResource listViewLabelStyle}" />
-                                <Label Text="{Binding LocationDisplayName}" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Style="{StaticResource listViewLabelStyle}"/>
-                                <Label Text="{Binding BodyContentSearchMatch}" Grid.Row="3" Grid.ColumnSpan="3" Style="{StaticResource listViewLabelStyle}"/>
+                                <Label Text="Start" Grid.Row="0" Grid.Column="0" Style="{StaticResource listViewLabelStyle}"/>
+                                <Label Text="{Binding Start, Converter={StaticResource dateTimeToString}}" Grid.Row="0" Grid.Column="1" Style="{StaticResource listViewLabelStyle}"/>
+                                <Label Text="{Binding SearchMatch}" Grid.Row="1" Style="{StaticResource listViewLabelStyle}" Grid.ColumnSpan="2"/>
                             </Grid>
                         </ViewCell>
                     </DataTemplate>

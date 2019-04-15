@@ -1,9 +1,7 @@
 ﻿using CoreServices;
 using System;
-using System.Diagnostics;
 using System.Threading.Tasks;
 using Xamarin.Forms;
-using Common;
 using System.Linq;
 using System.Collections.ObjectModel;
 using Models;
@@ -75,9 +73,7 @@ namespace OutlookCalender.ViewModels
             else
             {
                 var searchValue = _searchValue.ToLower();
-                var events = await _calendarService.GetEventModels((e) => (!string.IsNullOrEmpty(e.Subject) && e.Subject.ToLower().Contains(searchValue))
-                || (!string.IsNullOrEmpty(e.BodyContent) && e.BodyContent.RemoveHtmlTags().ToLower().Contains(searchValue))
-                || (!string.IsNullOrEmpty(e.LocationDisplayName) && e.LocationDisplayName.ToLower().Contains(searchValue)));
+                var events = await _calendarService.GetEventModels((e) => !string.IsNullOrEmpty(e.SearchMatch(searchValue).Item2));
                 SearchResultListVisible = events.Any();
 
                 if (_searchResultListVisible)

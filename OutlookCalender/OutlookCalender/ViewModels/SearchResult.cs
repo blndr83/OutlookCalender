@@ -13,7 +13,7 @@ namespace OutlookCalender.ViewModels
         public string Subject { get; private set; }
         public string BodyContent { get; private set; }
         public string LocationDisplayName { get; private set; }
-        public string BodyContentSearchMatch { get; private set; }
+        public string SearchMatch { get; private set; }
 
         public static SearchResult FromEvent(EventModel @event, string searchValue)
         {
@@ -21,7 +21,10 @@ namespace OutlookCalender.ViewModels
             var eventProperities = @event.GetType().GetProperties();
             var searchResultProperties = searchResult.GetType().GetProperties();
             eventProperities.ToList().ForEach(_ => searchResultProperties.FirstOrDefault(s => s.Name.Equals(_.Name))?.SetValue(searchResult, _.GetValue(@event)));
-            SetBodyContentSearchMatch(searchResult, searchValue);
+            var searchMatch = @event.SearchMatch(searchValue);
+            if (searchMatch.Item1.Equals(nameof(BodyContent))) SetBodyContentSearchMatch(searchResult, searchValue);
+            else searchResult.SearchMatch = searchMatch.Item2;
+
 
             return searchResult;
         }
@@ -57,7 +60,7 @@ namespace OutlookCalender.ViewModels
 
                     var threeDots = startIndex > 0 ? "..." : string.Empty;
                     var threeDotsAtTheEnd = length < bodyContentWithoutHtml.Length - 1 ? "..." : string.Empty;
-                    searchResult.BodyContentSearchMatch = $"{threeDots}{bodyContentWithoutHtml.Substring(startIndex, length - startIndex)}{threeDotsAtTheEnd}";
+                    searchResult.SearchMatch = $"{threeDots}{bodyContentWithoutHtml.Substring(startIndex, length - startIndex)}{threeDotsAtTheEnd}";
                 }
             }
         }
