@@ -30,7 +30,7 @@
                 <Label Text="{Binding LocationDisplayName}" Grid.Row="2" Grid.Column="1"/>
                 <Label Text="Subject" Grid.Row="3" Grid.Column="0"/>
                 <Label Text="{Binding Subject}" Grid.Row="3" Grid.Column="1"/>
-                <WebView Source="{Binding BodyContent, Converter={StaticResource htmlConverter}}" Grid.Row="4" Grid.ColumnSpan="2"/>
+                <WebView Source="{Binding BodyContent, Converter={StaticResource htmlConverter}}" Grid.Row="4" Grid.ColumnSpan="2" />
             </Grid>
         </ScrollView>
     </ContentPage.Content>

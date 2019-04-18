@@ -43,7 +43,8 @@
                                 </Grid.ColumnDefinitions>
                                 <Label Text="Start" Grid.Row="0" Grid.Column="0" Style="{StaticResource listViewLabelStyle}"/>
                                 <Label Text="{Binding Start, Converter={StaticResource dateTimeToString}}" Grid.Row="0" Grid.Column="1" Style="{StaticResource listViewLabelStyle}"/>
-                                <Label Text="{Binding SearchMatch}" Grid.Row="1" Style="{StaticResource listViewLabelStyle}" Grid.ColumnSpan="2"/>
+                                <Label Text="{Binding SearchMatchLabel}" Grid.Row="1" Grid.Column="0" Style="{StaticResource listViewLabelStyle}"/>
+                                <Label Text="{Binding SearchMatch}" Grid.Row="1" Style="{StaticResource listViewLabelStyle}" Grid.Column="1"/>
                             </Grid>
                         </ViewCell>
                     </DataTemplate>

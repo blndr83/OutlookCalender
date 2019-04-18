@@ -9,7 +9,7 @@
             <Style x:Key="gridStyle" TargetType="Grid">
                 <Setter Property="RowSpacing">
                     <Setter.Value>
-                        <OnIdiom Phone="1" Tablet="10" Desktop="10"/>
+                        <OnIdiom Phone="0.5" Tablet="10" Desktop="10"/>
                     </Setter.Value>
                 </Setter>
                 <Setter Property="ColumnSpacing">
@@ -21,12 +21,12 @@
             <Style x:Key="listViewGridStyle" TargetType="Grid">
                 <Setter Property="RowSpacing">
                     <Setter.Value>
-                        <OnIdiom Phone="1" Tablet="5" Desktop="5"/>
+                        <OnIdiom Phone="0.1" Tablet="5" Desktop="5"/>
                     </Setter.Value>
                 </Setter>
                 <Setter Property="ColumnSpacing">
                     <Setter.Value>
-                        <OnIdiom Phone="3" Tablet="10" Desktop="10"/>
+                        <OnIdiom Phone="2" Tablet="10" Desktop="10"/>
                     </Setter.Value>
                 </Setter>
             </Style>

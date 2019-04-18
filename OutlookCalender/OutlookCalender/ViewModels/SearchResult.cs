@@ -14,6 +14,7 @@ namespace OutlookCalender.ViewModels
         public string BodyContent { get; private set; }
         public string LocationDisplayName { get; private set; }
         public string SearchMatch { get; private set; }
+        public string SearchMatchLabel { get; private set; }
 
         public static SearchResult FromEvent(EventModel @event, string searchValue)
         {
@@ -22,11 +23,24 @@ namespace OutlookCalender.ViewModels
             var searchResultProperties = searchResult.GetType().GetProperties();
             eventProperities.ToList().ForEach(_ => searchResultProperties.FirstOrDefault(s => s.Name.Equals(_.Name))?.SetValue(searchResult, _.GetValue(@event)));
             var searchMatch = @event.SearchMatch(searchValue);
+
             if (searchMatch.Item1.Equals(nameof(BodyContent))) SetBodyContentSearchMatch(searchResult, searchValue);
             else searchResult.SearchMatch = searchMatch.Item2;
 
+            SetSearchMatchLabel(searchResult, searchMatch.Item1);
 
             return searchResult;
+        }
+
+        private static void SetSearchMatchLabel(SearchResult searchResult, string searchMatchPropertyName)
+        {
+            if (searchMatchPropertyName.Equals(nameof(Subject)))
+                searchResult.SearchMatchLabel = nameof(Subject);
+            else if (searchMatchPropertyName.Equals(nameof(LocationDisplayName)))
+                searchResult.SearchMatchLabel = "Location";
+            else
+                searchResult.SearchMatchLabel = "Body Content";
+
         }
 
         private static void SetBodyContentSearchMatch(SearchResult searchResult, string searchValue)
