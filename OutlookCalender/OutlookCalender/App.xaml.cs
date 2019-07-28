@@ -11,7 +11,7 @@ namespace OutlookCalender
     public partial class App : Application
     {
         private ViewModelLocator _viewModelLocator;
-        public static UIParent UiParent { set { UiParentProvider.UiParent = value; } }
+        public static object UiParent { set { UiParentProvider.UiParent = value; } }
 
         public App()
         {

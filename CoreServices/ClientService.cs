@@ -10,7 +10,7 @@ namespace CoreServices
 {
     public class ClientService : IClientService
     {
-        private readonly PublicClientApplication _client;
+        private readonly IPublicClientApplication _client;
 
         public object Properties { get; }
 
@@ -20,14 +20,14 @@ namespace CoreServices
 
             var appId = OAuth.Appid;
             var authority = "https://login.microsoftonline.com/consumers";
-            _client = new PublicClientApplication(appId, authority);
+            _client = PublicClientApplicationBuilder.Create(appId).WithAuthority(authority).Build();
 
         }
 
         private async Task<AuthenticationResult> GetAuthenticationAsync(string loginHint)
         {
             var scopes = OAuth.Scope.Split(' ');
-            return await _client.AcquireTokenAsync(scopes, loginHint, UiParentProvider.UiParent);
+            return await _client.AcquireTokenInteractive(scopes).WithParentActivityOrWindow(UiParentProvider.UiParent).WithLoginHint(loginHint).ExecuteAsync();
         }
 
         public async Task<GraphServiceClient> GraphServiceClient(string loginHint)

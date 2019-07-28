@@ -1,9 +1,10 @@
 ﻿using Microsoft.Identity.Client;
+using System;
 
 namespace CoreServices
 {
     public static class UiParentProvider
     {
-        public static UIParent UiParent { get; set; }
+        public static object UiParent { get; set; }
     }
 }

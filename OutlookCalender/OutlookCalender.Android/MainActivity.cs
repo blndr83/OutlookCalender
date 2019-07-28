@@ -25,7 +25,7 @@ namespace OutlookCalender.Droid
             base.OnCreate(savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             LoadApplication(new App());
-            App.UiParent = new UIParent(this);
+            App.UiParent = this;
         }
 
         protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
