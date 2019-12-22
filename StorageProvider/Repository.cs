@@ -30,7 +30,7 @@ namespace StorageProvider
 
         public Task<List<T>> FindAll<T>(Expression<Func<T, bool>> expression) where T : Entity
         {
-            return  _calendarDbContext.Set<T>().Where(expression).ToListAsync();
+            return _calendarDbContext.Set<T>().Where(expression).ToListAsync();
         }
 
         public void Save<T>(T entity) where T : Entity

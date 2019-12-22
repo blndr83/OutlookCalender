@@ -27,7 +27,7 @@ namespace CoreServices
 
         public Task<List<EventModel>> GetEventModels(Expression<Func<EventModel, bool>> expression)
         {
-            return  _repository.FindAll<EventModel>(expression);
+            return _repository.FindAll<EventModel>(expression);
         }
 
         public void Sync(string loginHint, DateTime startDate, DateTime endDate)

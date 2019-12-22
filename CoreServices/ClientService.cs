@@ -1,10 +1,8 @@
 ﻿using Microsoft.Graph;
 using Microsoft.Identity.Client;
 using System;
-using System.Globalization;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
-
 
 namespace CoreServices
 {
@@ -24,10 +22,10 @@ namespace CoreServices
 
         }
 
-        private async Task<AuthenticationResult> GetAuthenticationAsync(string loginHint)
+        private Task<AuthenticationResult> GetAuthenticationAsync(string loginHint)
         {
             var scopes = OAuth.Scope.Split(' ');
-            return await _client.AcquireTokenInteractive(scopes).WithParentActivityOrWindow(UiParentProvider.UiParent).WithLoginHint(loginHint).ExecuteAsync();
+            return _client.AcquireTokenInteractive(scopes).WithParentActivityOrWindow(UiParentProvider.UiParent).WithLoginHint(loginHint).ExecuteAsync();
         }
 
         public async Task<GraphServiceClient> GraphServiceClient(string loginHint)
