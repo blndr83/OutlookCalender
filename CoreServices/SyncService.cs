@@ -54,15 +54,7 @@ namespace CoreServices
                         LocationDisplayName = c.Location.DisplayName
                     });
                 });
-                var nextStartDate = startDate.AddDays(7);
-                if (nextStartDate < endDate)
-                {
-                    var nextEvents = await GetEventsAsync(loginHint, nextStartDate, endDate);
-                    if (nextEvents.Any())
-                    {
-                        events.AddRange(nextEvents);
-                    }
-                }
+
             }
             return events.OrderBy(e => e.Start).ToList();
         }
