@@ -14,7 +14,6 @@ namespace OutlookCalender
             var builder = new ContainerBuilder();
 
             builder.RegisterInstance(showSearchResult);
-            builder.RegisterType<CalendarService>().As<ICalendarService>().SingleInstance();
             builder.RegisterType<ClientService>().As<IClientService>().SingleInstance();
             builder.RegisterType<MainViewModel>().SingleInstance();
             builder.RegisterType<Repository>().As<IRepository>().SingleInstance();

@@ -1,10 +1,10 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace CoreServices
 {
     public interface ISyncService
     {
-        void Sync(string loginHint, DateTime startDate, DateTime endDate);
-        Action SyncDone { get; set; }
+        Task Sync(string loginHint, DateTime startDate, DateTime endDate);
     }
 }

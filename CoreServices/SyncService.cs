@@ -15,8 +15,6 @@ namespace CoreServices
         private GraphServiceClient _client;
         private readonly IClientService _clientService;
 
-        public Action SyncDone { get; set; }
-
         public SyncService(IRepository repository, IClientService clientService)
         {
             _repository = repository;
@@ -59,7 +57,7 @@ namespace CoreServices
             return events.OrderBy(e => e.Start).ToList();
         }
 
-        public async void Sync(string loginHint, DateTime startDate, DateTime endDate)
+        public async Task Sync(string loginHint, DateTime startDate, DateTime endDate)
         {
             try
             {
@@ -77,11 +75,11 @@ namespace CoreServices
                         }
                     });
                 }
-                SyncDone?.Invoke();
+               
             }
             catch (Exception ex) when (ex is HttpRequestException || ex is MsalClientException)
             {
-                SyncDone?.Invoke();
+                throw;
             }
 
         }

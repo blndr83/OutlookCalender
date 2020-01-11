@@ -10,7 +10,8 @@ namespace OutlookCalender.ViewModels
 {
     public class MainViewModel : ViewModelBase
     {
-        private readonly ICalendarService _calendarService;
+        private readonly ISyncService _syncService;
+        private readonly IRepository _repository;
         private string _loginhint;
         private DateTime _startDate;
         private DateTime _endDate;
@@ -33,17 +34,17 @@ namespace OutlookCalender.ViewModels
         
         public SearchResult SelectedSearchResult { get { return _selectedSearchResult; } set { SetBackingField(ref _selectedSearchResult, value, OnSelectedSearchResultChanged); } }
 
-        public MainViewModel(ICalendarService calendarService, Action<SearchResult> showSearchDetailPage)
+        public MainViewModel(ISyncService syncService, Action<SearchResult> showSearchDetailPage, IRepository repository)
         {
             _showSearchDetailPage = showSearchDetailPage;
-            _calendarService = calendarService;
+            _syncService = syncService;
+            _repository = repository;
             SyncCommand = new RelayCommand(OnSyncCommand)
             {
                 IsEnabled = false
             };
             StartDate = DateTime.Today.AddDays(-7);
             EndDate = DateTime.Today.AddDays(30);
-            _calendarService.SyncDone = OnSyncDone;
             LoginHintEnabled = true;
             _searchResultsInternal = new ObservableCollection<SearchResult>();
             SearchResults = new ReadOnlyObservableCollection<SearchResult>(_searchResultsInternal);
@@ -66,21 +67,30 @@ namespace OutlookCalender.ViewModels
             }
         }
 
-        private async void OnSearchCommand()
+        private void OnSearchCommand()
         {
             _searchResultsInternal.Clear();
             if (string.IsNullOrWhiteSpace(_searchValue)) SearchResultListVisible = false;
             else
             {
+
                 var searchValue = _searchValue.ToLower();
-                var events = await _calendarService.GetEventModels((e) => !string.IsNullOrEmpty(e.SearchMatch(searchValue).Item2));
-                SearchResultListVisible = events.Any();
-
-                if (_searchResultListVisible)
-                {
-                    events.OrderByDescending(e => e.Start).ToList().ForEach(_ => _searchResultsInternal.Add(SearchResult.FromEvent(_, searchValue)));
-
-                }
+                Task.Run(async () =>
+                  {
+                      var events = await _repository.FindAll<EventModel>((e) => !string.IsNullOrEmpty(e.SearchMatch(searchValue).Item2));
+                      if(events != null)
+                      {
+                          Device.BeginInvokeOnMainThread(() =>
+                          {
+                                SearchResultListVisible = events.Any();
+                                if (_searchResultListVisible)
+                                {
+                                    events.OrderByDescending(e => e.Start).ToList().ForEach(_ => _searchResultsInternal.Add(SearchResult.FromEvent(_, searchValue)));
+                                }
+                          });
+                      }
+                  });
+    
             }
 
         }
@@ -101,11 +111,11 @@ namespace OutlookCalender.ViewModels
             {
                 SyncCommand.IsEnabled = false;
                 LoginHintEnabled = false;
-                Task.Run( () =>
+                Task.Run(async () =>
                 {
-                     _calendarService.Sync(_loginhint, _startDate, _endDate);
-           
-                });
+                   await _syncService.Sync(_loginhint, _startDate, _endDate);
+
+                }).ContinueWith((_) =>  OnSyncDone());
                 
             }
 
