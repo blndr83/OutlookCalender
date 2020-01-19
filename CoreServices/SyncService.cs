@@ -28,7 +28,8 @@ namespace CoreServices
             var queryOptions = new List<QueryOption>
             {
                 new QueryOption("StartDateTime",startDate.ToUniversalTime().ToString("o")),
-                new QueryOption("EndDateTime",endDate.ToUniversalTime().ToString("o"))
+                new QueryOption("EndDateTime",endDate.ToUniversalTime().ToString("o")),
+                new QueryOption("$top", "10000")
             };
             return await _client.Me.CalendarView.Request(queryOptions).GetAsync();
         }
