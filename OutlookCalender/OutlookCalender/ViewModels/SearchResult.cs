@@ -51,29 +51,38 @@ namespace OutlookCalender.ViewModels
                 if (bodyContentWithoutHtml.ToLower().Contains(searchValue))
                 {
                     var indexOfSearchMatch = bodyContentWithoutHtml.ToLower().IndexOf(searchValue);
-                    var startIndex = indexOfSearchMatch - 20 < 0 ? indexOfSearchMatch : indexOfSearchMatch - 20;
-                    if (startIndex < 20) startIndex = 0;
-                    bool condition(char c) { return c.Equals(' ') || c.Equals('.') || c.Equals(',') || c.Equals(';') || c.Equals(':'); }
-                    for (var i = startIndex; i > 0; i--)
+                    var startIndex = 0;
+                    var count = 0;
+                    for (var i = indexOfSearchMatch; i > 0; i--)
                     {
-                        if (condition(bodyContentWithoutHtml[i]))
+                        if (!char.IsLetterOrDigit(bodyContentWithoutHtml[i]))
                         {
                             startIndex = i;
-                            break;
+                            count++;
+                            if (count == 2) 
+                             {
+                                startIndex++;
+                                break; 
+                             }
+
                         }
                     }
-                    var length = startIndex + 40 < bodyContentWithoutHtml.Length - 1 ? startIndex + 40 : bodyContentWithoutHtml.Length - 1;
-                    for(var i=length; i < bodyContentWithoutHtml.Length; i++)
+                   var length = startIndex + 40 < bodyContentWithoutHtml.Length ? startIndex + 40 : bodyContentWithoutHtml.Length;
+                   if(length < bodyContentWithoutHtml.Length)
                     {
-                        if (condition(bodyContentWithoutHtml[i]))
+                        for(var i=length; i < bodyContentWithoutHtml.Length; i++)
                         {
-                            length = i;
-                            break;
+                            if (!char.IsLetterOrDigit(bodyContentWithoutHtml[i]))
+                            {
+                                length = i;
+                                break;
+                            }
                         }
                     }
 
                     var threeDots = startIndex > 0 ? "..." : string.Empty;
                     var threeDotsAtTheEnd = length < bodyContentWithoutHtml.Length - 1 ? "..." : string.Empty;
+
                     searchResult.SearchMatch = $"{threeDots}{bodyContentWithoutHtml.Substring(startIndex, length - startIndex)}{threeDotsAtTheEnd}";
                 }
             }
