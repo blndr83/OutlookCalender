@@ -14,6 +14,7 @@ namespace OutlookCalender.ViewModels
         public string BodyContent { get; private set; }
         public string LocationDisplayName { get; private set; }
         public string SearchMatch { get; private set; }
+        public string SearchMatchHighlight { get; private set; }
         public string SearchMatchLabel { get; private set; }
 
         public static SearchResult FromEvent(EventModel @event, string searchValue)
@@ -28,8 +29,18 @@ namespace OutlookCalender.ViewModels
             else searchResult.SearchMatch = searchMatch.Item2;
 
             SetSearchMatchLabel(searchResult, searchMatch.Item1);
-
+            SetSearchMatchHighlight(searchResult, searchValue);
             return searchResult;
+        }
+
+        private static void SetSearchMatchHighlight(SearchResult searchResult, string searchValue)
+        {
+            var indexOfSearchVauleinSearchMatch = searchResult.SearchMatch.ToLower().IndexOf(searchValue);
+            var highlightHtml = "<strong>"; 
+            var searchMatchHighlight = searchResult.SearchMatch.Insert(indexOfSearchVauleinSearchMatch, highlightHtml);
+            var endIndexOfSearchVauleinSearchMatch = searchResult.SearchMatch.ToLower().IndexOf(searchValue) + searchValue.Length + highlightHtml.Length;
+            searchMatchHighlight = searchMatchHighlight.Insert(endIndexOfSearchVauleinSearchMatch, "</strong>");
+            searchResult.SearchMatchHighlight = searchMatchHighlight;
         }
 
         private static void SetSearchMatchLabel(SearchResult searchResult, string searchMatchPropertyName)
