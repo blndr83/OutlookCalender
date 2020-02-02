@@ -5,6 +5,7 @@ using Xamarin.Forms;
 using System.Linq;
 using System.Collections.ObjectModel;
 using Models;
+using Xamarin.Essentials;
 
 namespace OutlookCalender.ViewModels
 {
@@ -21,6 +22,7 @@ namespace OutlookCalender.ViewModels
         private bool _searchResultListVisible;
         private SearchResult _selectedSearchResult;
         private Action<SearchResult> _showSearchDetailPage;
+        private string _internetConnection;
 
         public RelayCommand SyncCommand { get; }
         public string Loginhint { get { return _loginhint; } set { SetBackingField(ref _loginhint, value, OnLoginhintChanged); } }
@@ -31,6 +33,7 @@ namespace OutlookCalender.ViewModels
         public ReadOnlyObservableCollection<SearchResult> SearchResults { get; }
         public bool SearchResultListVisible { get { return _searchResultListVisible; } private set { SetBackingField(ref _searchResultListVisible, value); } }
         public RelayCommand SearchCommand { get; }
+        public string InternetConnection { get { return _internetConnection; } private set { SetBackingField(ref _internetConnection, value); } }
         
         public SearchResult SelectedSearchResult { get { return _selectedSearchResult; } set { SetBackingField(ref _selectedSearchResult, value, OnSelectedSearchResultChanged); } }
 
@@ -49,6 +52,19 @@ namespace OutlookCalender.ViewModels
             _searchResultsInternal = new ObservableCollection<SearchResult>();
             SearchResults = new ReadOnlyObservableCollection<SearchResult>(_searchResultsInternal);
             SearchCommand = new RelayCommand(OnSearchCommand);
+            SetInternetConnection();
+            Connectivity.ConnectivityChanged += Connectivity_ConnectivityChanged;
+        }
+
+        private void Connectivity_ConnectivityChanged(object sender, ConnectivityChangedEventArgs e)
+        {
+            SetInternetConnection();
+        }
+
+        private void SetInternetConnection()
+        {
+            InternetConnection = Connectivity.NetworkAccess == NetworkAccess.Internet ? "🌐 Internet" : "Kein Internet";
+            if (_loginHintEnabled) SetSyncCommandEnabled();
         }
 
         private void OnSyncDone()
@@ -102,7 +118,12 @@ namespace OutlookCalender.ViewModels
 
         private void OnLoginhintChanged(string oldvalue)
         {
-            SyncCommand.IsEnabled = !string.IsNullOrWhiteSpace(_loginhint);
+            SetSyncCommandEnabled();
+        }
+
+        private void SetSyncCommandEnabled()
+        {
+            SyncCommand.IsEnabled = !string.IsNullOrWhiteSpace(_loginhint) && Connectivity.NetworkAccess == NetworkAccess.Internet;
         }
 
         private void OnSyncCommand()
