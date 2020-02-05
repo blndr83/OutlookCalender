@@ -6,6 +6,7 @@ using System.Linq;
 using System.Collections.ObjectModel;
 using Models;
 using Xamarin.Essentials;
+using System.Windows.Input;
 
 namespace OutlookCalender.ViewModels
 {
@@ -25,6 +26,7 @@ namespace OutlookCalender.ViewModels
         private string _internetConnection;
 
         public RelayCommand SyncCommand { get; }
+        public Command<SearchResult> SearchResultItemTappedCommand {get;}
         public string Loginhint { get { return _loginhint; } set { SetBackingField(ref _loginhint, value, OnLoginhintChanged); } }
         public DateTime StartDate { get { return _startDate; } set { SetBackingField(ref _startDate, value); } }
         public DateTime EndDate { get { return _endDate; } set { SetBackingField(ref _endDate, value); } }
@@ -35,8 +37,6 @@ namespace OutlookCalender.ViewModels
         public RelayCommand SearchCommand { get; }
         public string InternetConnection { get { return _internetConnection; } private set { SetBackingField(ref _internetConnection, value); } }
         
-        public SearchResult SelectedSearchResult { get { return _selectedSearchResult; } set { SetBackingField(ref _selectedSearchResult, value, OnSelectedSearchResultChanged); } }
-
         public MainViewModel(ISyncService syncService, Action<SearchResult> showSearchDetailPage, IRepository repository)
         {
             _showSearchDetailPage = showSearchDetailPage;
@@ -54,6 +54,13 @@ namespace OutlookCalender.ViewModels
             SearchCommand = new RelayCommand(OnSearchCommand);
             SetInternetConnection();
             Connectivity.ConnectivityChanged += Connectivity_ConnectivityChanged;
+            SearchResultItemTappedCommand = new Command<SearchResult>(SearchResultItemTapped);
+        }
+
+        private void SearchResultItemTapped(SearchResult item)
+        {
+            _selectedSearchResult = item;
+            OnSelectedSearchResultChanged();
         }
 
         private void Connectivity_ConnectivityChanged(object sender, ConnectivityChangedEventArgs e)
@@ -111,7 +118,7 @@ namespace OutlookCalender.ViewModels
 
         }
 
-        private void OnSelectedSearchResultChanged(SearchResult oldvalue)
+        private void OnSelectedSearchResultChanged()
         {
             if (_selectedSearchResult != null) _showSearchDetailPage(_selectedSearchResult);
         }
