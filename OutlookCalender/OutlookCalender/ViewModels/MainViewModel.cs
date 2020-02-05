@@ -6,7 +6,6 @@ using System.Linq;
 using System.Collections.ObjectModel;
 using Models;
 using Xamarin.Essentials;
-using System.Windows.Input;
 
 namespace OutlookCalender.ViewModels
 {
@@ -21,7 +20,6 @@ namespace OutlookCalender.ViewModels
         private bool _loginHintEnabled;
         private ObservableCollection<SearchResult> _searchResultsInternal;
         private bool _searchResultListVisible;
-        private SearchResult _selectedSearchResult;
         private Action<SearchResult> _showSearchDetailPage;
         private string _internetConnection;
 
@@ -59,8 +57,7 @@ namespace OutlookCalender.ViewModels
 
         private void SearchResultItemTapped(SearchResult item)
         {
-            _selectedSearchResult = item;
-            OnSelectedSearchResultChanged();
+             if (item != null) _showSearchDetailPage(item);
         }
 
         private void Connectivity_ConnectivityChanged(object sender, ConnectivityChangedEventArgs e)
@@ -116,11 +113,6 @@ namespace OutlookCalender.ViewModels
     
             }
 
-        }
-
-        private void OnSelectedSearchResultChanged()
-        {
-            if (_selectedSearchResult != null) _showSearchDetailPage(_selectedSearchResult);
         }
 
         private void OnLoginhintChanged(string oldvalue)
