@@ -19,19 +19,17 @@ namespace OutlookCalender.ViewModels
         private string _searchValue;
         private bool _loginHintEnabled;
         private ObservableCollection<SearchResult> _searchResultsInternal;
-        private bool _searchResultListVisible;
         private Action<SearchResult> _showSearchDetailPage;
         private string _internetConnection;
 
         public RelayCommand SyncCommand { get; }
-        public Command<SearchResult> SearchResultItemTappedCommand {get;}
+        public Command<SearchResult> SearchResultSelectionChangedCommand {get;}
         public string Loginhint { get { return _loginhint; } set { SetBackingField(ref _loginhint, value, OnLoginhintChanged); } }
         public DateTime StartDate { get { return _startDate; } set { SetBackingField(ref _startDate, value); } }
         public DateTime EndDate { get { return _endDate; } set { SetBackingField(ref _endDate, value); } }
         public string SearchValue { get { return _searchValue; } set { SetBackingField(ref _searchValue, value, OnSearchValueChanged); } }
         public bool LoginHintEnabled { get { return _loginHintEnabled; } private set { SetBackingField(ref _loginHintEnabled, value); } }
         public ReadOnlyObservableCollection<SearchResult> SearchResults { get; }
-        public bool SearchResultListVisible { get { return _searchResultListVisible; } private set { SetBackingField(ref _searchResultListVisible, value); } }
         public RelayCommand SearchCommand { get; }
         public string InternetConnection { get { return _internetConnection; } private set { SetBackingField(ref _internetConnection, value); } }
         
@@ -52,10 +50,10 @@ namespace OutlookCalender.ViewModels
             SearchCommand = new RelayCommand(OnSearchCommand);
             SetInternetConnection();
             Connectivity.ConnectivityChanged += Connectivity_ConnectivityChanged;
-            SearchResultItemTappedCommand = new Command<SearchResult>(SearchResultItemTapped);
+            SearchResultSelectionChangedCommand = new Command<SearchResult>(SearchResultSelectionChanged);
         }
 
-        private void SearchResultItemTapped(SearchResult item)
+        private void SearchResultSelectionChanged(SearchResult item)
         {
              if (item != null) _showSearchDetailPage(item);
         }
@@ -83,15 +81,13 @@ namespace OutlookCalender.ViewModels
         {
             if (string.IsNullOrWhiteSpace(_searchValue)) {
                 _searchResultsInternal.Clear();
-                SearchResultListVisible = false;
             }
         }
 
         private void OnSearchCommand()
         {
             _searchResultsInternal.Clear();
-            if (string.IsNullOrWhiteSpace(_searchValue)) SearchResultListVisible = false;
-            else
+            if(!string.IsNullOrWhiteSpace(_searchValue))
             {
 
                 var searchValue = _searchValue.ToLower();
@@ -102,8 +98,7 @@ namespace OutlookCalender.ViewModels
                       {
                           Device.BeginInvokeOnMainThread(() =>
                           {
-                                SearchResultListVisible = events.Any();
-                                if (_searchResultListVisible)
+                                if (events.Any())
                                 {
                                     events.OrderByDescending(e => e.Start).ToList().ForEach(_ => _searchResultsInternal.Add(SearchResult.FromEvent(_, searchValue)));
                                 }

@@ -1,8 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="OutlookCalender.MainPage"
-             xmlns:behaviorsPack ="clr-namespace:Xamarin.Forms.BehaviorsPack;assembly=Xamarin.Forms.BehaviorsPack">
+             x:Class="OutlookCalender.MainPage">
     <ScrollView>
         <Grid Style="{StaticResource gridStyle}" Padding="10,10,10,0">
             <Grid.RowDefinitions>
@@ -31,31 +30,29 @@
                 IsEnabled="{Binding SyncCommand.IsEnabled}"
                 Grid.ColumnSpan="2"/>
             <SearchBar Text="{Binding SearchValue}" SearchCommand="{Binding SearchCommand}" Grid.Row="5" Grid.ColumnSpan="2"/>
-            <ListView Grid.Row="6" IsVisible="{Binding SearchResultListVisible}" ItemsSource="{Binding SearchResults}" Grid.ColumnSpan="2">
-                <ListView.ItemTemplate>
+            <CollectionView Grid.Row="6" ItemsSource="{Binding SearchResults}" x:Name="searchResultCollection" Grid.ColumnSpan="2" SelectionMode="Single" SelectionChangedCommand="{Binding SearchResultSelectionChangedCommand}">
+                <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <ViewCell>
-                            <Grid Style="{StaticResource listViewGridStyle}">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <Label Text="Start" Grid.Row="0" Grid.Column="0" Style="{StaticResource listViewLabelStyle}"/>
-                                <Label Text="{Binding Start, Converter={StaticResource dateTimeToString}}" Grid.Row="0" Grid.Column="1" Style="{StaticResource listViewLabelStyle}"/>
-                                <Label Text="{Binding SearchMatchLabel}" Grid.Row="1" Grid.Column="0" Style="{StaticResource listViewLabelStyle}"/>
-                                <Label Text="{Binding SearchMatchHighlight}" TextType="Html" Grid.Row="1" Style="{StaticResource listViewLabelStyle}" Grid.Column="1"/>
-                            </Grid>
-                        </ViewCell>
+                        <Grid Style="{StaticResource listViewGridStyle}">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer  Command="{Binding BindingContext.SearchResultSelectionChangedCommand, Source={x:Reference searchResultCollection}}" CommandParameter="{Binding}"/>
+                            </Grid.GestureRecognizers>
+                            <Label Text="Start" Grid.Row="0" Grid.Column="0" Style="{StaticResource listViewLabelStyle}"/>
+                            <Label Text="{Binding Start, Converter={StaticResource dateTimeToString}}" Grid.Row="0" Grid.Column="1" Style="{StaticResource listViewLabelStyle}"/>
+                            <Label Text="{Binding SearchMatchLabel}" Grid.Row="1" Grid.Column="0" Style="{StaticResource listViewLabelStyle}"/>
+                            <Label Text="{Binding SearchMatchHighlight}" TextType="Html" Grid.Row="1" Style="{StaticResource listViewLabelStyle}" Grid.Column="1"/>
+                        </Grid>
                     </DataTemplate>
-                </ListView.ItemTemplate>
-                <ListView.Behaviors>
-                    <behaviorsPack:EventToCommandBehavior EventName="ItemTapped" Command="{Binding SearchResultItemTappedCommand}" EventArgsPropertyPath="Item" />
-                </ListView.Behaviors>
-            </ListView>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
         </Grid>
     </ScrollView>
 </ContentPage>
