@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Common;
 
 namespace CoreServices
 {
@@ -50,7 +51,8 @@ namespace CoreServices
                         Subject = c.Subject,
                         Start = DateTime.Parse(c.Start.DateTime),
                         End = DateTime.Parse(c.End.DateTime),
-                        LocationDisplayName = c.Location.DisplayName
+                        LocationDisplayName = c.Location.DisplayName,
+                        BodyContentWithoutHtml = c.Body.Content?.RemoveHtmlTags()
                     });
                 });
 

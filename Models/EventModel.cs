@@ -10,12 +10,14 @@ namespace Models
         public  string Subject { get; set; }
         public  string BodyContent { get; set; }
         public string LocationDisplayName { get; set; }
+        public string BodyContentWithoutHtml { get; set; }
 
         public  void Update(EventModel eventModel)
         {
             BodyContent = eventModel.BodyContent;
             Subject = eventModel.Subject;
             LocationDisplayName = eventModel.LocationDisplayName;
+            BodyContentWithoutHtml = eventModel.BodyContentWithoutHtml;
         }
     }
 }

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Collections.ObjectModel;
 using Models;
 using Xamarin.Essentials;
+using Common;
 
 namespace OutlookCalender.ViewModels
 {
@@ -91,9 +92,10 @@ namespace OutlookCalender.ViewModels
             {
 
                 var searchValue = _searchValue.ToLower();
+
                 Task.Run(async () =>
                   {
-                      var events = await _repository.FindAll<EventModel>((e) => !string.IsNullOrEmpty(e.SearchMatch(searchValue).Item2));
+                      var events = await _repository.FindAll(EventModelExtensions.GetSearchCondition(searchValue));
                       if(events != null)
                       {
                           Device.BeginInvokeOnMainThread(() =>

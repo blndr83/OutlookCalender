@@ -1,7 +1,6 @@
 ﻿using Models;
 using System;
 using System.Linq;
-using Common;
 
 namespace OutlookCalender.ViewModels
 {
@@ -16,6 +15,7 @@ namespace OutlookCalender.ViewModels
         public string SearchMatch { get; private set; }
         public string SearchMatchHighlight { get; private set; }
         public string SearchMatchLabel { get; private set; }
+        public string BodyContentWithoutHtml { get; private set; }
 
         public static SearchResult FromEvent(EventModel @event, string searchValue)
         {
@@ -56,9 +56,9 @@ namespace OutlookCalender.ViewModels
 
         private static void SetBodyContentSearchMatch(SearchResult searchResult, string searchValue)
         {
-            if (!string.IsNullOrEmpty(searchResult.BodyContent))
+            if (!string.IsNullOrEmpty(searchResult.BodyContentWithoutHtml))
             {
-                var bodyContentWithoutHtml = searchResult.BodyContent.RemoveHtmlTags().Replace(Environment.NewLine, "");
+                var bodyContentWithoutHtml = searchResult.BodyContentWithoutHtml.Replace(Environment.NewLine, "");
                 if (bodyContentWithoutHtml.ToLower().Contains(searchValue))
                 {
                     var indexOfSearchMatch = bodyContentWithoutHtml.ToLower().IndexOf(searchValue);

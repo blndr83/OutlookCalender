@@ -1,8 +1,7 @@
 ﻿using Autofac;
 using CoreServices;
-using Models;
 using OutlookCalender.ViewModels;
-using StorageProvider;
+using StorageProvider.Autofac;
 using System;
 
 namespace OutlookCalender
@@ -16,9 +15,8 @@ namespace OutlookCalender
             builder.RegisterInstance(showSearchResult);
             builder.RegisterType<ClientService>().As<IClientService>().SingleInstance();
             builder.RegisterType<MainViewModel>().SingleInstance();
-            builder.RegisterType<Repository>().As<IRepository>().SingleInstance();
             builder.RegisterType<SyncService>().As<ISyncService>().SingleInstance();
-
+            builder.RegisterModule<StorageProviderModule>();
             return builder.Build();
         }
     }

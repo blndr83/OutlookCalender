@@ -1,9 +1,7 @@
-﻿
-using Android.App;
+﻿using Android.App;
 using Android.Content.PM;
 using Android.OS;
 using StorageProvider;
-using System.IO;
 using Microsoft.Identity.Client;
 using Android.Content;
 
@@ -14,7 +12,7 @@ namespace OutlookCalender.Droid
     {
         public MainActivity()
         {
-            CalendarDbContext.DbPath = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.LocalApplicationData), CalendarDbContext.DB);
+            DataSourceProvider.SetDbPath(System.Environment.GetFolderPath(System.Environment.SpecialFolder.LocalApplicationData));
         }
 
         protected override void OnCreate(Bundle savedInstanceState)

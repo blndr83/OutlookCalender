@@ -12,9 +12,9 @@ namespace StorageProvider
     {
         CalendarDbContext _calendarDbContext;
 
-        public Repository()
+        public Repository(CalendarDbContext calendarDbContext)
         {
-            _calendarDbContext = new CalendarDbContext();
+            _calendarDbContext = calendarDbContext;
         }
 
         public void Delete<T>(T entity) where T : Entity

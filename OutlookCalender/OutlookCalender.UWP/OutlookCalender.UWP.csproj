@@ -156,6 +156,10 @@
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform" Version="6.2.10" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\StorageProvider\StorageProvider.csproj">
+      <Project>{11e92d56-36e3-4d06-b751-dbdcd12bb302}</Project>
+      <Name>StorageProvider</Name>
+    </ProjectReference>
     <ProjectReference Include="..\OutlookCalender\OutlookCalender.csproj">
       <Project>{78307940-73F0-4D91-92AB-B072631DD543}</Project>
       <Name>OutlookCalender</Name>

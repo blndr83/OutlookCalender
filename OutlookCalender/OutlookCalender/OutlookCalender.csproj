@@ -16,7 +16,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Common\Common.csproj" />
     <ProjectReference Include="..\..\CoreServices\CoreServices.csproj" />
     <ProjectReference Include="..\..\Models\Models.csproj" />
     <ProjectReference Include="..\..\StorageProvider\StorageProvider.csproj" />
