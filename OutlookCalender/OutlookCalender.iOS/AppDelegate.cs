@@ -4,6 +4,7 @@ using System.Linq;
 
 using Foundation;
 using UIKit;
+using StorageProvider;
 
 namespace OutlookCalender.iOS
 {
@@ -22,6 +23,7 @@ namespace OutlookCalender.iOS
         //
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
+            DataSourceProvider.SetDbPath(System.Environment.GetFolderPath(System.Environment.SpecialFolder.LocalApplicationData));
             global::Xamarin.Forms.Forms.Init();
             LoadApplication(new App());
 
