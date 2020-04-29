@@ -9,7 +9,7 @@ namespace StorageProvider
 
         public static void SetDbPath(string path)
         {
-            DbPath = Path.Combine(path, DataSourceProvider.DB);
+            DbPath = Path.Combine(path, DB);
         }
     }
 }
