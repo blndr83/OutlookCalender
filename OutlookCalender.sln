@@ -17,7 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "Common\Common.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OutlookCalender.Android", "OutlookCalender\OutlookCalender.Android\OutlookCalender.Android.csproj", "{6333876E-55C8-4D7C-8817-9863970997D6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OutlookCalender.iOS", "OutlookCalender\OutlookCalendar.iOS\OutlookCalender.iOS.csproj", "{826FBCCE-114D-4D3F-A58D-DC9C728BA910}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OutlookCalender.iOS", "OutlookCalender\OutlookCalender.iOS\OutlookCalender.iOS.csproj", "{826FBCCE-114D-4D3F-A58D-DC9C728BA910}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
