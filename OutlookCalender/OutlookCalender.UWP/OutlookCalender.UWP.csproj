@@ -143,9 +143,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Autofac">
-      <Version>5.1.2</Version>
-    </PackageReference>
     <PackageReference Include="Microsoft.Identity.Client">
       <Version>3.0.8</Version>
     </PackageReference>
