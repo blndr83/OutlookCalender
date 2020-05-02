@@ -14,6 +14,7 @@ namespace OutlookCalender
 
         public App()
         {
+            SQLitePCL.Batteries_V2.Init();
             _viewModelLocator = new ViewModelLocator(ContainerConfig.Configurate(ShowSearchDetailsPage));
             InitializeComponent();
             MainPage = new NavigationPage(new MainPage { BindingContext = _viewModelLocator.GetViewModel<MainViewModel>() });        
