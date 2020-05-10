@@ -31,8 +31,7 @@
                 Grid.ColumnSpan="2"/>
             <SearchBar Text="{Binding SearchValue}" SearchCommand="{Binding SearchCommand}" Grid.Row="5" Grid.ColumnSpan="2"/>
             <CollectionView Grid.Row="6" ItemsSource="{Binding SearchResults}" 
-                            x:Name="searchResultCollection" Grid.ColumnSpan="2"
-                            SelectionMode="Single" >
+                            x:Name="searchResultCollection" Grid.ColumnSpan="2">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <Grid Style="{StaticResource listViewGridStyle}">
@@ -45,7 +44,7 @@
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <Grid.GestureRecognizers>
-                                <TapGestureRecognizer  Command="{Binding BindingContext.SearchResultSelectionChangedCommand, Source={x:Reference searchResultCollection}}" CommandParameter="{Binding}"/>
+                                <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"  Command="{Binding BindingContext.SearchResultSelectionChangedCommand, Source={x:Reference searchResultCollection}}" CommandParameter="{Binding}"/>
                             </Grid.GestureRecognizers>
                             <Label Text="Start" Grid.Row="0" Grid.Column="0" Style="{StaticResource listViewLabelStyle}"/>
                             <Label Text="{Binding Start, Converter={StaticResource dateTimeToString}}" Grid.Row="0" Grid.Column="1" Style="{StaticResource listViewLabelStyle}"/>

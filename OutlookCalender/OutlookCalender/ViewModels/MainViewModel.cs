@@ -33,7 +33,8 @@ namespace OutlookCalender.ViewModels
         public ReadOnlyObservableCollection<SearchResult> SearchResults { get; }
         public RelayCommand SearchCommand { get; }
         public string InternetConnection { get { return _internetConnection; } private set { SetBackingField(ref _internetConnection, value); } }
-        
+        public Action SearchResultListChanged { get; set; }
+
         public MainViewModel(ISyncService syncService, Action<SearchResult> showSearchDetailPage, IRepository repository)
         {
             _showSearchDetailPage = showSearchDetailPage;
@@ -87,6 +88,7 @@ namespace OutlookCalender.ViewModels
 
         private void OnSearchCommand()
         {
+            SearchResultListChanged();
             _searchResultsInternal.Clear();
             if(!string.IsNullOrWhiteSpace(_searchValue))
             {
