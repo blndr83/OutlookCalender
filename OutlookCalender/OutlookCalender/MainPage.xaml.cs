@@ -1,4 +1,5 @@
-﻿using OutlookCalender.ViewModels;
+﻿using OutlookCalender.Locator;
+using OutlookCalender.ViewModels;
 using Xamarin.Forms;
 
 namespace OutlookCalender
@@ -6,12 +7,12 @@ namespace OutlookCalender
     public partial class MainPage : ContentPage
     {
         private VisualElement _previousSelected;
-        private MainViewModel _viewModel;
+        private readonly MainViewModel _viewModel;
 
-        public MainPage(MainViewModel viewModel)
+        public MainPage()
         {
             InitializeComponent();
-            _viewModel = viewModel;
+            _viewModel = ViewModelLocator.Instance.GetViewModel<MainViewModel>();
             BindingContext = _viewModel;
             _previousSelected = null;
             _viewModel.SearchResultListChanged = () => _previousSelected = null;

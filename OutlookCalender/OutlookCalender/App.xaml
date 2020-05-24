@@ -50,6 +50,35 @@
                     </Setter.Value>
                 </Setter>
             </Style>
+            <OnPlatform x:TypeArguments="x:String" 
+                x:Key="FontAwesomeBrands">
+                <On Platform="Android" 
+          Value="FontAwesome5BrandsRegular.otf#Regular" />
+                <On Platform="iOS" 
+          Value="FontAwesome5Brands-Regular" />
+                <On Platform="UWP" 
+          Value="/Assets/fonts/FontAwesome5BrandsRegular.otf#Font Awesome 5 Brands" />
+            </OnPlatform>
+
+            <OnPlatform x:TypeArguments="x:String" 
+                x:Key="FontAwesomeSolid">
+                <On Platform="Android" 
+          Value="FontAwesome5FreeSolid.otf#Regular" />
+                <On Platform="iOS" 
+          Value="FontAwesome5Free-Solid" />
+                <On Platform="UWP" 
+          Value="/Assets/fonts/FontAwesome5FreeSolid.otf#Font Awesome 5 Free" />
+            </OnPlatform>
+
+            <OnPlatform x:TypeArguments="x:String" 
+                x:Key="FontAwesomeRegular">
+                <On Platform="Android" 
+          Value="FontAwesome5FreeRegular.otf#Regular" />
+                <On Platform="iOS" 
+          Value="FontAwesome5FreeRegular" />
+                <On Platform="UWP" 
+          Value="/Assets/fonts/FontAwesome5FreeRegular.otf#Font Awesome 5 Free" />
+            </OnPlatform>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

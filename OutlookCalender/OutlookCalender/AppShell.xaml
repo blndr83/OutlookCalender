@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Shell xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:views="clr-namespace:OutlookCalender"
+             x:Class="OutlookCalender.AppShell">
+    <TabBar>
+        <Tab Title="Home">
+            <Tab.Icon>
+                <FontImageSource FontFamily="{StaticResource FontAwesomeSolid}" Size="24" Glyph="&#xf015;" >
+                </FontImageSource>
+            </Tab.Icon>
+            <ShellContent>
+                <views:MainPage/>
+            </ShellContent>
+        </Tab>
+        <Tab Title="Sync History">
+            <Tab.Icon>
+                <FontImageSource FontFamily="{StaticResource FontAwesomeSolid}" Size="24" Glyph="&#xf1da;">
+                </FontImageSource>
+            </Tab.Icon>
+            <ShellContent>
+                <views:SyncHistoryPage/>
+            </ShellContent>
+        </Tab>
+    </TabBar>
+
+</Shell>

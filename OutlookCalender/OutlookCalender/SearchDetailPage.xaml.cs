@@ -1,4 +1,5 @@
-﻿using Xamarin.Forms;
+﻿using OutlookCalender.Locator;
+using Xamarin.Forms;
 
 namespace OutlookCalender
 {
@@ -6,6 +7,7 @@ namespace OutlookCalender
 	{
 		public SearchDetailPage ()
 		{
+			BindingContext = ViewModelLocator.Instance.SearchResult;
 			InitializeComponent ();
 		}
 	}

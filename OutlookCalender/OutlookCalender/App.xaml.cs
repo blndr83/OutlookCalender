@@ -9,20 +9,20 @@ namespace OutlookCalender
 {
     public partial class App : Application
     {
-        private ViewModelLocator _viewModelLocator;
         public static object UiParent { set { UiParentProvider.UiParent = value; } }
 
         public App()
         {
             SQLitePCL.Batteries_V2.Init();
-            _viewModelLocator = new ViewModelLocator(ContainerConfig.Configurate(ShowSearchDetailsPage));
+            ViewModelLocator.CreateInstance(ContainerConfig.Configurate(ShowSearchDetailsPage));
             InitializeComponent();
-            MainPage = new NavigationPage(new MainPage(_viewModelLocator.GetViewModel<MainViewModel>()));        
+            MainPage = new AppShell();
         }
 
         private async void ShowSearchDetailsPage(SearchResult searchResult)
         {
-            await ((NavigationPage)MainPage).PushAsync(new SearchDetailPage { BindingContext = searchResult });
+            ViewModelLocator.Instance.SearchResult = searchResult;
+            await Shell.Current.GoToAsync("SearchDetails");
         }
 
 

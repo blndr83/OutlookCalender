@@ -10,7 +10,7 @@ namespace StorageProvider
 {
     public class Repository : IRepository
     {
-        CalendarDbContext _calendarDbContext;
+        private readonly CalendarDbContext _calendarDbContext;
 
         public Repository(CalendarDbContext calendarDbContext)
         {

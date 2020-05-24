@@ -67,9 +67,9 @@
       <Version>28.0.0.3</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Essentials">
-      <Version>1.5.3.1</Version>
+      <Version>1.5.3.2</Version>
     </PackageReference>
-    <PackageReference Include="Xamarin.Forms" Version="4.6.0.726" />
+    <PackageReference Include="Xamarin.Forms" Version="4.6.0.800" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainActivity.cs" />
@@ -77,6 +77,15 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <AndroidAsset Include="..\fonts\otfs\FontAwesome5BrandsRegular.otf">
+      <Link>Assets\FontAwesome5BrandsRegular.otf</Link>
+    </AndroidAsset>
+    <AndroidAsset Include="..\fonts\otfs\FontAwesome5FreeRegular.otf">
+      <Link>Assets\FontAwesome5FreeRegular.otf</Link>
+    </AndroidAsset>
+    <AndroidAsset Include="..\fonts\otfs\FontAwesome5FreeSolid.otf">
+      <Link>Assets\FontAwesome5FreeSolid.otf</Link>
+    </AndroidAsset>
     <None Include="Resources\AboutResources.txt" />
     <None Include="Assets\AboutAssets.txt" />
     <None Include="Properties\AndroidManifest.xml" />
