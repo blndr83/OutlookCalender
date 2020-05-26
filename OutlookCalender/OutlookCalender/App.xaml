@@ -6,6 +6,12 @@
     <Application.Resources>
         <ResourceDictionary>
             <converter:DateTimeToStringConverter x:Key="dateTimeToString"/>
+            <converter:DateTimeToDateStringConverter x:Key="dateTimeToDateString"/>
+            <Style x:Key="ButtonStyle" TargetType="Button">
+                <Setter Property="CornerRadius" Value="10" />
+                <Setter Property="BackgroundColor" Value="LightSkyBlue" />
+                <Setter Property="TextColor" Value="White" />
+            </Style>
             <Style x:Key="gridStyle" TargetType="Grid">
                 <Setter Property="RowSpacing">
                     <Setter.Value>
@@ -42,6 +48,12 @@
                         </VisualStateGroup>
                     </VisualStateGroupList>
                 </Setter>
+            </Style>
+            <Style x:Key="syncHistoryLabelStyle" TargetType="Label">
+                <Setter Property="HorizontalTextAlignment" Value="Center"/>
+                <Setter Property="VerticalTextAlignment" Value="Center" />
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="VerticalOptions" Value="Center"/>
             </Style>
             <Style x:Key="listViewLabelStyle" TargetType="Label">
                 <Setter Property="FontSize">

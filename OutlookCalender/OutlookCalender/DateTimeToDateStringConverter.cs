@@ -1,18 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
 using Xamarin.Forms;
 
 namespace OutlookCalender
 {
-    public class DateTimeToStringConverter : IValueConverter
+    public class DateTimeToDateStringConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if(value != null && value is DateTime)
             {
                 var dateTimeValue = (DateTime)value;
-                return $"{dateTimeValue.ToShortDateString()} {dateTimeValue.ToShortTimeString()}";
+                return dateTimeValue.ToShortDateString();
             }
             return string.Empty;
         }

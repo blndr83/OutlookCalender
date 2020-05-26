@@ -25,10 +25,11 @@
             <Label Text="End Date" Grid.Column="0" VerticalOptions="Center" Grid.Row="3"/>
             <DatePicker Date="{Binding EndDate}" Grid.Column="1" Grid.Row="3"/>
             <Button Grid.Row="4" 
+                Style="{StaticResource ButtonStyle}"
                 Text="Sync with Outlook.com"        
                 Command="{Binding SyncCommand}" 
                 IsEnabled="{Binding SyncCommand.IsEnabled}"
-                Grid.ColumnSpan="2"/>
+                Grid.ColumnSpan="2" HorizontalOptions="Center" VerticalOptions="Center" />
             <SearchBar Text="{Binding SearchValue}" SearchCommand="{Binding SearchCommand}" Grid.Row="5" Grid.ColumnSpan="2"/>
             <CollectionView Grid.Row="6" ItemsSource="{Binding SearchResults}" 
                             x:Name="searchResultCollection" Grid.ColumnSpan="2">

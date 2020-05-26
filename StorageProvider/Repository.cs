@@ -33,6 +33,11 @@ namespace StorageProvider
             return _calendarDbContext.Set<T>().Where(expression).AsNoTracking().ToListAsync();
         }
 
+        public Task<List<T>> GetAll<T>() where T : Entity
+        {
+            return _calendarDbContext.Set<T>().AsNoTracking().ToListAsync();
+        }
+
         public void Save<T>(T entity) where T : Entity
         {
             _calendarDbContext.Add(entity);

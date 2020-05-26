@@ -11,5 +11,6 @@ namespace StorageProvider
         }
 
         public DbSet<EventModel> Events { get; set; }
+        public DbSet<SyncLog> SyncLogs { get; set; }
     }
 }

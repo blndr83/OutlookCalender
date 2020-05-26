@@ -17,6 +17,7 @@ namespace OutlookCalender
             builder.RegisterType<MainViewModel>().SingleInstance();
             builder.RegisterType<SyncService>().As<ISyncService>().SingleInstance();
             builder.RegisterModule<StorageProviderModule>();
+            builder.RegisterType<SyncHistoryViewModel>();
             return builder.Build();
         }
     }

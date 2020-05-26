@@ -1,4 +1,5 @@
-﻿using Xamarin.Forms;
+﻿using OutlookCalender.Constants;
+using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace OutlookCalender
@@ -9,7 +10,7 @@ namespace OutlookCalender
         public AppShell()
         {
             InitializeComponent();
-            Routing.RegisterRoute("SearchDetails", typeof(SearchDetailPage));
+            Routing.RegisterRoute(RouteNames.SearchDetails, typeof(SearchDetailPage));
         }
     }
 }

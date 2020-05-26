@@ -64,20 +64,28 @@ namespace CoreServices
         {
             try
             {
+                var addCount = 0;
+                var updateCount = 0;
                 var calendarEvents = await GetEventsAsync(loginHint, startDate, endDate);
                 if (calendarEvents.Any())
                 {
                     calendarEvents.ForEach(_ =>
                     {
                         var eventModel = _repository.Find<EventModel>((e) => e.Id.Equals(_.Id));
-                        if (eventModel == null) _repository.Save(_);
+                        if (eventModel == null) 
+                        {
+                            _repository.Save(_);
+                            addCount++;
+                        }
                         else if (!_.BodyContent.Equals(eventModel.BodyContent))
                         {
                             eventModel.Update(_);
                             _repository.Update(eventModel);
+                            updateCount++;
                         }
                     });
                 }
+                _repository.Save(new SyncLog() { AmountOfAddedItems = addCount, AmountOfUpdatedItems = updateCount, StartDate = startDate, EndDate = endDate, SyncDate = DateTime.Today, Id = Guid.NewGuid()});
                
             }
             catch (Exception ex) when (ex is HttpRequestException || ex is MsalClientException)

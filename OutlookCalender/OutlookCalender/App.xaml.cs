@@ -1,4 +1,5 @@
 ﻿using CoreServices;
+using OutlookCalender.Constants;
 using OutlookCalender.Locator;
 using OutlookCalender.ViewModels;
 using Xamarin.Forms;
@@ -22,7 +23,7 @@ namespace OutlookCalender
         private async void ShowSearchDetailsPage(SearchResult searchResult)
         {
             ViewModelLocator.Instance.SearchResult = searchResult;
-            await Shell.Current.GoToAsync("SearchDetails");
+            await Shell.Current.GoToAsync(RouteNames.SearchDetails);
         }
 
 

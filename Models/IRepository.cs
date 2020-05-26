@@ -12,5 +12,6 @@ namespace Models
         void Delete<T>(T entity) where T : Entity;
         T Find<T>(Expression<Func<T, bool>> expression) where T : Entity;
         Task<List<T>> FindAll<T>(Expression<Func<T, bool>> expression) where T : Entity;
+        Task<List<T>> GetAll<T>() where T : Entity;
     }
 }

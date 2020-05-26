@@ -4,12 +4,89 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
+             xmlns:constants="clr-namespace:OutlookCalender.Constants"
              x:Class="OutlookCalender.SyncHistoryPage">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
+        <ScrollView>
+            <Grid Padding="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Label Grid.Column="0" Grid.Row="0" Text="Sync History" Style="{StaticResource syncHistoryLabelStyle}"/>
+                <Button Grid.Column="0" Grid.Row="1" Command="{Binding DeleteHistoryCommand}" IsEnabled="{Binding DeleteHistoryEnabled}" Text="Delete History" HorizontalOptions="Center" VerticalOptions="Center" Style="{StaticResource ButtonStyle}"/>
+                <Grid Grid.Column="0" Grid.Row="2">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Label Text="Start Date" Grid.Column="0" Grid.Row="0" Style="{StaticResource syncHistoryLabelStyle}"/>
+                    <DatePicker Grid.Column="1" Grid.Row="0" Date="{Binding StartDate}" HorizontalOptions="Center" />
+                    <Label Text="End Date" Grid.Column="0" Grid.Row="1" Style="{StaticResource syncHistoryLabelStyle}"/>
+                    <DatePicker Grid.Column="1" Grid.Row="1"  Date="{Binding EndDate}" HorizontalOptions="Center"/>
+                    <StackLayout Grid.Row="2" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalOptions="Center" VerticalOptions="Center">
+                        <Button Text="Apply Filter"  Command="{Binding ApplyFilterCommand}" IsEnabled="{Binding ApplyFilterEnabled}"  HorizontalOptions="Center" VerticalOptions="Center"  Style="{StaticResource ButtonStyle}"/>
+                        <Button Text="Undo Filter" Command="{Binding UndoFilterCommand}" IsEnabled="{Binding UndoFilterEnabled}"  HorizontalOptions="Center" VerticalOptions="Center"  Style="{StaticResource ButtonStyle}"/>
+                    </StackLayout>
+                </Grid>
+                <CollectionView Grid.Column="0" Grid.Row="3" Header="{Binding .}" ItemsSource="{Binding SyncLogs}">
+                    <CollectionView.HeaderTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Label Grid.Row="0"  Grid.Column="0" Text="Start Date" Style="{StaticResource syncHistoryLabelStyle}"/>
+                                <Label Grid.Row="0"  Grid.Column="1" Text="End Date" Style="{StaticResource syncHistoryLabelStyle}" />
+                                <Label Grid.Row="0"  Grid.Column="2" Text="Added Itens" Style="{StaticResource syncHistoryLabelStyle}" />
+                                <Label Grid.Row="0"  Grid.Column="3" Text="Updated Items" Style="{StaticResource syncHistoryLabelStyle}" />
+                                <Label Grid.Row="0"  Grid.Column="4" Text="Sync Date" Style="{StaticResource syncHistoryLabelStyle}" />
+                                <Label Grid.Row="0"  Grid.Column="5" Text="Delete Sync Log" Style="{StaticResource syncHistoryLabelStyle}" />
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.HeaderTemplate>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Label Grid.Column="0" Text="{Binding StartDate, Converter={StaticResource dateTimeToDateString}}" Grid.Row="0" Style="{StaticResource syncHistoryLabelStyle}" />
+                                <Label Grid.Column="1" Text="{Binding EndDate, Converter={StaticResource dateTimeToDateString}}" Grid.Row="0" Style="{StaticResource syncHistoryLabelStyle}" />
+                                <Label Grid.Column="2" Grid.Row="0" Text="{Binding AmountOfAddedItems}" Style="{StaticResource syncHistoryLabelStyle}" />
+                                <Label Grid.Column="3" Grid.Row="0" Text="{Binding AmountOfUpdatedItems}" Style="{StaticResource syncHistoryLabelStyle}" />
+                                <Label Grid.Column="4" Grid.Row="0" Text="{Binding SynxDate, Converter={StaticResource dateTimeToDateString}}"  Style="{StaticResource syncHistoryLabelStyle}" />
+                                <Button Grid.Column="5" Grid.Row="0" FontFamily="{StaticResource FontAwesomeSolid}" FontSize="12" Text="{x:Static constants:FontAwesomeIcons.Trash}" Style="{StaticResource ButtonStyle}"  Command="{Binding BindingContext.DeleteLogCommand}" CommandParameter="{Binding Id}"/>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                    <CollectionView.EmptyView>
+                        <StackLayout Orientation="Vertical">
+                            <Label Style="{StaticResource syncHistoryLabelStyle}" Margin="10" Text="No Sync Logs available" />
+                        </StackLayout>
+                    </CollectionView.EmptyView>
+                </CollectionView>
+            </Grid>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

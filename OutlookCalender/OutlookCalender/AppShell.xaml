@@ -2,11 +2,12 @@
 <Shell xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:views="clr-namespace:OutlookCalender"
+             xmlns:constants="clr-namespace:OutlookCalender.Constants"
              x:Class="OutlookCalender.AppShell">
     <TabBar>
         <Tab Title="Home">
             <Tab.Icon>
-                <FontImageSource FontFamily="{StaticResource FontAwesomeSolid}" Size="24" Glyph="&#xf015;" >
+                <FontImageSource FontFamily="{StaticResource FontAwesomeSolid}" Size="24" Glyph="{x:Static constants:FontAwesomeIcons.Home}" >
                 </FontImageSource>
             </Tab.Icon>
             <ShellContent>
@@ -15,7 +16,7 @@
         </Tab>
         <Tab Title="Sync History">
             <Tab.Icon>
-                <FontImageSource FontFamily="{StaticResource FontAwesomeSolid}" Size="24" Glyph="&#xf1da;">
+                <FontImageSource FontFamily="{StaticResource FontAwesomeSolid}" Size="24" Glyph="{x:Static constants:FontAwesomeIcons.History}">
                 </FontImageSource>
             </Tab.Icon>
             <ShellContent>

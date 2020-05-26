@@ -19,8 +19,8 @@ namespace OutlookCalender.ViewModels
         private DateTime _endDate;
         private string _searchValue;
         private bool _loginHintEnabled;
-        private ObservableCollection<SearchResult> _searchResultsInternal;
-        private Action<SearchResult> _showSearchDetailPage;
+        private readonly ObservableCollection<SearchResult> _searchResultsInternal;
+        private readonly Action<SearchResult> _showSearchDetailPage;
         private string _internetConnection;
 
         public RelayCommand SyncCommand { get; }
