@@ -29,7 +29,6 @@ namespace OutlookCalender.ViewModels
         private bool _applyFilterEnabled;
         private bool _undoFilterEnabled;
         private bool _deleteHistoryEnabled;
-        private bool _isSyncLogCollectionInit;
 
         public SyncHistoryViewModel(IRepository repository)
         {
@@ -42,6 +41,7 @@ namespace OutlookCalender.ViewModels
             DeleteLogCommand = new Command<Guid>(DeleteLog);
             _syncLogsInternal = new ObservableCollection<SyncLog>();
             SyncLogs = new ReadOnlyObservableCollection<SyncLog>(_syncLogsInternal);
+            DeleteHistoryCommand = new Command(DeleteHistory);
         }
 
         private void OnFilterDateChanged(DateTime oldValue)
@@ -51,14 +51,15 @@ namespace OutlookCalender.ViewModels
 
         public void InitSyncLogCollection()
         {
-            if(!_isSyncLogCollectionInit)
+            if(!_undoFilterEnabled)
             {
+                _syncLogsInternal.Clear();
                 Task.Run(async () =>
                 {
                     var syncLogs = await _repository.GetAll<SyncLog>();
                     UpdateSyncLogCollection(syncLogs);
-                    _isSyncLogCollectionInit = true;
                 });
+   
             }
         }
 
@@ -67,11 +68,15 @@ namespace OutlookCalender.ViewModels
             _syncLogsInternal.Clear();
             Task.Run(async () =>
             {
-                var syncLogs = await _repository.FindAll<SyncLog>(_ => _.StartDate >= _startDate && _.EndDate <= _endDate);
+                var syncLogs = await _repository.FindAll<SyncLog>(_ => _.StartDate <= _startDate && _.EndDate >= _endDate);
                  UpdateSyncLogCollection(syncLogs);
-            });
-            UndoFilterEnabled = true;
-            DeleteHistoryEnabled = _syncLogsInternal.Any();
+            }).ContinueWith((_) => UndoFilterEnabled = true);
+   
+        }
+        
+        private void DeleteHistory()
+        {
+
         }
 
         private void DeleteLog(Guid id)
@@ -89,7 +94,7 @@ namespace OutlookCalender.ViewModels
                 {
                     syncLogs.OrderByDescending(_ => _.SyncDate).ToList().ForEach(s => _syncLogsInternal.Add(s));
                 }
-                    
+                DeleteHistoryEnabled = _syncLogsInternal.Any();
             });
         }
 
@@ -100,9 +105,8 @@ namespace OutlookCalender.ViewModels
             {
                 var syncLogs = await _repository.GetAll<SyncLog>();
                 UpdateSyncLogCollection(syncLogs);
-            });
-            UndoFilterEnabled = false;
-            DeleteHistoryEnabled = _syncLogsInternal.Any();
+            }).ContinueWith((_) => UndoFilterEnabled = false);
+   
         }
     }
 }

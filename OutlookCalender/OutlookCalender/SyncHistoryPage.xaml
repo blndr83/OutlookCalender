@@ -42,7 +42,7 @@
                 <CollectionView Grid.Column="0" Grid.Row="3" Header="{Binding .}" ItemsSource="{Binding SyncLogs}">
                     <CollectionView.HeaderTemplate>
                         <DataTemplate>
-                            <Grid>
+                            <Grid Style="{StaticResource syncLogGridStyle}">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="*" />
@@ -56,13 +56,13 @@
                                 <Label Grid.Row="0"  Grid.Column="2" Text="Added Items" Style="{StaticResource syncHistoryLabelStyle}" />
                                 <Label Grid.Row="0"  Grid.Column="3" Text="Updated Items" Style="{StaticResource syncHistoryLabelStyle}" />
                                 <Label Grid.Row="0"  Grid.Column="4" Text="Sync Date" Style="{StaticResource syncHistoryLabelStyle}" />
-                                <Label Grid.Row="0"  Grid.Column="5" Text="Delete Sync Log" Style="{StaticResource syncHistoryLabelStyle}" />
+                                <Label Grid.Row="0"  Grid.Column="5" Text="Delete Entry" Style="{StaticResource syncHistoryLabelStyle}" />
                             </Grid>
                         </DataTemplate>
                     </CollectionView.HeaderTemplate>
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
-                            <Grid>
+                            <Grid Style="{StaticResource syncLogGridStyle}" Padding="0,0,0,5">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="*" />
@@ -71,12 +71,15 @@
                                     <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
                                 <Label Grid.Column="0" Text="{Binding StartDate, Converter={StaticResource dateTimeToDateString}}" Grid.Row="0" Style="{StaticResource syncHistoryLabelStyle}" />
                                 <Label Grid.Column="1" Text="{Binding EndDate, Converter={StaticResource dateTimeToDateString}}" Grid.Row="0" Style="{StaticResource syncHistoryLabelStyle}" />
                                 <Label Grid.Column="2" Grid.Row="0" Text="{Binding AmountOfAddedItems}" Style="{StaticResource syncHistoryLabelStyle}" />
                                 <Label Grid.Column="3" Grid.Row="0" Text="{Binding AmountOfUpdatedItems}" Style="{StaticResource syncHistoryLabelStyle}" />
                                 <Label Grid.Column="4" Grid.Row="0" Text="{Binding SyncDate, Converter={StaticResource dateTimeToDateString}}"  Style="{StaticResource syncHistoryLabelStyle}" />
-                                <Button Grid.Column="5" Grid.Row="0" FontFamily="{StaticResource FontAwesomeSolid}" FontSize="12" Text="{x:Static constants:FontAwesomeIcons.Trash}" Style="{StaticResource ButtonStyle}"  Command="{Binding BindingContext.DeleteLogCommand}" CommandParameter="{Binding Id}"/>
+                                <Button Grid.Column="5" Grid.Row="0" FontFamily="{StaticResource FontAwesomeSolid}" Text="{x:Static constants:FontAwesomeIcons.Trash}" Style="{StaticResource ButtonStyle}"  Command="{Binding BindingContext.DeleteLogCommand}" CommandParameter="{Binding Id}" HorizontalOptions="Center" VerticalOptions="Center"/>
                             </Grid>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
