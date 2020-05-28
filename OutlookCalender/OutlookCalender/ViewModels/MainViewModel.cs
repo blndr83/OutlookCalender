@@ -7,6 +7,8 @@ using System.Collections.ObjectModel;
 using Models;
 using Xamarin.Essentials;
 using Common;
+using MvvmHelpers;
+using System.Collections.Generic;
 
 namespace OutlookCalender.ViewModels
 {
@@ -19,7 +21,7 @@ namespace OutlookCalender.ViewModels
         private DateTime _endDate;
         private string _searchValue;
         private bool _loginHintEnabled;
-        private readonly ObservableCollection<SearchResult> _searchResultsInternal;
+        private readonly ObservableRangeCollection<SearchResult> _searchResultsInternal;
         private readonly Action<SearchResult> _showSearchDetailPage;
         private string _internetConnection;
 
@@ -47,7 +49,7 @@ namespace OutlookCalender.ViewModels
             StartDate = DateTime.Today.AddDays(-7);
             EndDate = DateTime.Today.AddDays(30);
             LoginHintEnabled = true;
-            _searchResultsInternal = new ObservableCollection<SearchResult>();
+            _searchResultsInternal = new ObservableRangeCollection<SearchResult>();
             SearchResults = new ReadOnlyObservableCollection<SearchResult>(_searchResultsInternal);
             SearchCommand = new RelayCommand(OnSearchCommand);
             SetInternetConnection();
@@ -104,7 +106,9 @@ namespace OutlookCalender.ViewModels
                           {
                                 if (events.Any())
                                 {
-                                    events.OrderByDescending(e => e.Start).ToList().ForEach(_ => _searchResultsInternal.Add(SearchResult.FromEvent(_, searchValue)));
+                                    var tempList = new List<SearchResult>();
+                                    events.OrderByDescending(e => e.Start).ToList().ForEach(_ => tempList.Add(SearchResult.FromEvent(_, searchValue)));
+                                  _searchResultsInternal.AddRange(tempList);
                                 }
                           });
                       }
