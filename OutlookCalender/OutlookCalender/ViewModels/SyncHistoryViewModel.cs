@@ -1,4 +1,7 @@
 ﻿using Models;
+using MvvmHelpers;
+using MvvmHelpers.Commands;
+using MvvmHelpers.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -6,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
+using Command = Xamarin.Forms.Command;
 
 namespace OutlookCalender.ViewModels
 {
@@ -13,8 +17,8 @@ namespace OutlookCalender.ViewModels
     {
         public Command ApplyFilterCommand { get; }
         public Command UndoFilterCommand { get; }
-        public Command DeleteHistoryCommand { get; }
-        public Command<Guid> DeleteLogCommand { get; }
+        public IAsyncCommand DeleteHistoryCommand { get; }
+        public Xamarin.Forms.Command<Guid> DeleteLogCommand { get; }
         public ReadOnlyObservableCollection<SyncLog> SyncLogs { get; }
         public DateTime StartDate { get { return _startDate; } set { SetBackingField(ref _startDate, value, OnFilterDateChanged); } }
         public DateTime EndDate { get { return _endDate; } set { SetBackingField(ref _endDate, value, OnFilterDateChanged); } }
@@ -23,7 +27,7 @@ namespace OutlookCalender.ViewModels
         public bool DeleteHistoryEnabled { get { return _deleteHistoryEnabled; } private set { SetBackingField(ref _deleteHistoryEnabled, value); } }
         public string DeleteHistoryButtonText { get { return _deleteHistoryButtonText; } private set { SetBackingField(ref _deleteHistoryButtonText, value); } }
 
-        private readonly ObservableCollection<SyncLog> _syncLogsInternal;
+        private readonly ObservableRangeCollection<SyncLog> _syncLogsInternal;
         private readonly IRepository _repository;
         private DateTime _startDate;
         private DateTime _endDate;
@@ -43,10 +47,10 @@ namespace OutlookCalender.ViewModels
             ApplyFilterCommand = new Command(ApplyFilter);
             UndoFilterCommand = new Command(UndoFilter);
             ApplyFilterEnabled = true;
-            DeleteLogCommand = new Command<Guid>(DeleteLog);
-            _syncLogsInternal = new ObservableCollection<SyncLog>();
+            DeleteLogCommand = new Xamarin.Forms.Command<Guid>(DeleteLog);
+            _syncLogsInternal = new ObservableRangeCollection<SyncLog>();
             SyncLogs = new ReadOnlyObservableCollection<SyncLog>(_syncLogsInternal);
-            DeleteHistoryCommand = new Command(DeleteHistory);
+            DeleteHistoryCommand = new AsyncCommand(DeleteHistory);
             _displayAlert = displayAlert;
             DeleteHistoryButtonText = DeleteHistoryButtonTextStandard;
         }
@@ -81,19 +85,21 @@ namespace OutlookCalender.ViewModels
    
         }
         
-        private void DeleteHistory()
+        private async Task DeleteHistory()
         {
             const string filtered = "filtered";
             const string complete = "complete";
             var message = $"Do you realy want to delete the {(UndoFilterEnabled ? filtered : complete)} History";
-            Device.BeginInvokeOnMainThread(async () =>
+            var delete = await _displayAlert(message);
+            if(delete)
             {
-                var delete = await _displayAlert(message);
-                if(delete)
+                var itemsToDelete = UndoFilterEnabled ? await _repository.FindAll<SyncLog>(_ => _.StartDate <= _startDate && _.EndDate >= _endDate) : await _repository.GetAll<SyncLog>();
+                if(itemsToDelete.Any())
                 {
-
+                    _repository.DeleteRange(itemsToDelete);
+                    _syncLogsInternal.Clear();
                 }
-            });
+            }
             
         }
 
@@ -118,7 +124,7 @@ namespace OutlookCalender.ViewModels
             {
                 if (syncLogs.Any())
                 {
-                    syncLogs.OrderByDescending(_ => _.SyncDate).ToList().ForEach(s => _syncLogsInternal.Add(s));
+                    _syncLogsInternal.AddRange(syncLogs.OrderByDescending(_ => _.SyncDate).ToList());
                 }
                 DeleteHistoryEnabled = _syncLogsInternal.Any();
                 UndoFilterEnabled = undoFilteEnabled;

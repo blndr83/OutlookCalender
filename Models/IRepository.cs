@@ -10,6 +10,7 @@ namespace Models
         void Save<T>(T entity) where T : Entity;
         void Update<T>(T entity) where T : Entity;
         void Delete<T>(T entity) where T : Entity;
+        void DeleteRange<T>(IEnumerable<T> entities) where T : Entity;
         T Find<T>(Expression<Func<T, bool>> expression) where T : Entity;
         Task<List<T>> FindAll<T>(Expression<Func<T, bool>> expression) where T : Entity;
         Task<List<T>> GetAll<T>() where T : Entity;

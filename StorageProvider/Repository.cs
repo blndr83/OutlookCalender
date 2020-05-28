@@ -23,6 +23,12 @@ namespace StorageProvider
             _calendarDbContext.SaveChanges();
         }
 
+        public void DeleteRange<T>(IEnumerable<T> entities) where T : Entity
+        {
+            _calendarDbContext.Set<T>().RemoveRange(entities);
+            _calendarDbContext.SaveChanges();
+        }
+
         public T Find<T>(Expression<Func<T,bool>> expression) where T : Entity
         {
             return _calendarDbContext.Set<T>().FirstOrDefault(expression);
