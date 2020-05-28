@@ -19,7 +19,7 @@
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
                 <Label Grid.Column="0" Grid.Row="0" Text="Sync History" Style="{StaticResource syncHistoryLabelStyle}"/>
-                <Button Grid.Column="0" Grid.Row="1" Command="{Binding DeleteHistoryCommand}" IsEnabled="{Binding DeleteHistoryEnabled}" Text="Delete History" HorizontalOptions="Center" VerticalOptions="Center" Style="{StaticResource ButtonStyle}"/>
+                <Button Grid.Column="0" Grid.Row="1" Command="{Binding DeleteHistoryCommand}" IsEnabled="{Binding DeleteHistoryEnabled}" Text="{Binding DeleteHistoryButtonText}" HorizontalOptions="Center" VerticalOptions="Center" Style="{StaticResource ButtonStyle}"/>
                 <Grid Grid.Column="0" Grid.Row="2">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
@@ -39,7 +39,7 @@
                         <Button Text="Undo Filter" Command="{Binding UndoFilterCommand}" IsEnabled="{Binding UndoFilterEnabled}"  HorizontalOptions="Center" VerticalOptions="Center"  Style="{StaticResource ButtonStyle}"/>
                     </StackLayout>
                 </Grid>
-                <CollectionView Grid.Column="0" Grid.Row="3" Header="{Binding .}" ItemsSource="{Binding SyncLogs}">
+                <CollectionView Grid.Column="0" Grid.Row="3" Header="{Binding .}" ItemsSource="{Binding SyncLogs}" x:Name="syncLogCollection">
                     <CollectionView.HeaderTemplate>
                         <DataTemplate>
                             <Grid Style="{StaticResource syncLogGridStyle}">
@@ -79,7 +79,7 @@
                                 <Label Grid.Column="2" Grid.Row="0" Text="{Binding AmountOfAddedItems}" Style="{StaticResource syncHistoryLabelStyle}" />
                                 <Label Grid.Column="3" Grid.Row="0" Text="{Binding AmountOfUpdatedItems}" Style="{StaticResource syncHistoryLabelStyle}" />
                                 <Label Grid.Column="4" Grid.Row="0" Text="{Binding SyncDate, Converter={StaticResource dateTimeToDateString}}"  Style="{StaticResource syncHistoryLabelStyle}" />
-                                <Button Grid.Column="5" Grid.Row="0" FontFamily="{StaticResource FontAwesomeSolid}" Text="{x:Static constants:FontAwesomeIcons.Trash}" Style="{StaticResource ButtonStyle}"  Command="{Binding BindingContext.DeleteLogCommand}" CommandParameter="{Binding Id}" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                <Button Grid.Column="5" Grid.Row="0" FontFamily="{StaticResource FontAwesomeSolid}" Text="{x:Static constants:FontAwesomeIcons.Trash}" Style="{StaticResource ButtonStyle}"  Command="{Binding BindingContext.DeleteLogCommand, Source={x:Reference syncLogCollection}}" CommandParameter="{Binding Id}" HorizontalOptions="Center" VerticalOptions="Center"/>
                             </Grid>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>

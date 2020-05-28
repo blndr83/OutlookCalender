@@ -2,6 +2,7 @@
 using OutlookCalender.Constants;
 using OutlookCalender.Locator;
 using OutlookCalender.ViewModels;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -15,7 +16,7 @@ namespace OutlookCalender
         public App()
         {
             SQLitePCL.Batteries_V2.Init();
-            ViewModelLocator.CreateInstance(ContainerConfig.Configurate(ShowSearchDetailsPage));
+            ViewModelLocator.CreateInstance(ContainerConfig.Configurate(ShowSearchDetailsPage, ShowAlert));
             InitializeComponent();
             MainPage = new AppShell();
         }
@@ -26,6 +27,9 @@ namespace OutlookCalender
             await Shell.Current.GoToAsync(RouteNames.SearchDetails);
         }
 
-
+        private Task<bool> ShowAlert(string message)
+        {
+            return Shell.Current.DisplayAlert("", message, "Yes", "No");
+        }
     }
 }
