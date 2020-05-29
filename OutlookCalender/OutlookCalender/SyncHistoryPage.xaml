@@ -19,7 +19,7 @@
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
                 <Label Grid.Column="0" Grid.Row="0" Text="Sync History" Style="{StaticResource syncHistoryLabelStyle}"/>
-                <Button Grid.Column="0" Grid.Row="1" Command="{Binding DeleteHistoryCommand}" IsEnabled="{Binding DeleteHistoryEnabled}" Text="{Binding DeleteHistoryButtonText}" HorizontalOptions="Center" VerticalOptions="Center" Style="{StaticResource ButtonStyle}"/>
+                <Button Grid.Column="0" Grid.Row="1" Command="{Binding DeleteHistoryCommand}" IsEnabled="{Binding DeleteHistoryCommand.IsEnabled}" Text="{Binding DeleteHistoryButtonText}" HorizontalOptions="Center" VerticalOptions="Center" Style="{StaticResource ButtonStyle}"/>
                 <Grid Grid.Column="0" Grid.Row="2">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
@@ -35,8 +35,8 @@
                     <Label Text="End Date" Grid.Column="0" Grid.Row="1" Style="{StaticResource syncHistoryLabelStyle}"/>
                     <DatePicker Grid.Column="1" Grid.Row="1"  Date="{Binding EndDate}" HorizontalOptions="Center"/>
                     <StackLayout Grid.Row="2" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalOptions="Center" VerticalOptions="Center">
-                        <Button Text="Apply Filter"  Command="{Binding ApplyFilterCommand}" IsEnabled="{Binding ApplyFilterEnabled}"  HorizontalOptions="Center" VerticalOptions="Center"  Style="{StaticResource ButtonStyle}"/>
-                        <Button Text="Undo Filter" Command="{Binding UndoFilterCommand}" IsEnabled="{Binding UndoFilterEnabled}"  HorizontalOptions="Center" VerticalOptions="Center"  Style="{StaticResource ButtonStyle}"/>
+                        <Button Text="Apply Filter"  Command="{Binding ApplyFilterCommand}" IsEnabled="{Binding ApplyFilterCommand.IsEnabled}"  HorizontalOptions="Center" VerticalOptions="Center"  Style="{StaticResource ButtonStyle}"/>
+                        <Button Text="Undo Filter" Command="{Binding UndoFilterCommand}" IsEnabled="{Binding UndoFilterCommand.IsEnabled}"  HorizontalOptions="Center" VerticalOptions="Center"  Style="{StaticResource ButtonStyle}"/>
                     </StackLayout>
                 </Grid>
                 <CollectionView Grid.Column="0" Grid.Row="3" Header="{Binding .}" ItemsSource="{Binding SyncLogs}" x:Name="syncLogCollection">
