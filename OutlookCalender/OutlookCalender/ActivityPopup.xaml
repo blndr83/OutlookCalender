@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<pages:PopupPage  xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+             mc:Ignorable="d"
+             x:Class="OutlookCalender.ActivityPopup"
+             CloseWhenBackgroundIsClicked="False"
+             IsAnimationEnabled="False">
+    <Frame BackgroundColor="White" HorizontalOptions="Center" VerticalOptions="Center">
+        <Grid HorizontalOptions="Center" VerticalOptions="Center">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <ActivityIndicator x:Name="Indicator" Grid.Row="0" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center"/>
+            <Label x:Name="IndicatorText" Grid.Row="1" Grid.Column="0" Style="{StaticResource syncHistoryLabelStyle}" />
+        </Grid>
+    </Frame>
+</pages:PopupPage>

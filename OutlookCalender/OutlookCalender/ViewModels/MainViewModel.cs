@@ -24,6 +24,8 @@ namespace OutlookCalender.ViewModels
         private readonly ObservableRangeCollection<SearchResult> _searchResultsInternal;
         private readonly Action<SearchResult> _showSearchDetailPage;
         private string _internetConnection;
+        private readonly Func<string, Task> _showActivityPopup;
+        private readonly Func<Task> _removeActivityPopup;
 
         public RelayCommand SyncCommand { get; }
         public Command<SearchResult> SearchResultSelectionChangedCommand {get;}
@@ -37,7 +39,7 @@ namespace OutlookCalender.ViewModels
         public string InternetConnection { get { return _internetConnection; } private set { SetBackingField(ref _internetConnection, value); } }
         public Action SearchResultListChanged { get; set; }
 
-        public MainViewModel(ISyncService syncService, Action<SearchResult> showSearchDetailPage, IRepository repository)
+        public MainViewModel(ISyncService syncService, Action<SearchResult> showSearchDetailPage, IRepository repository, Func<string, Task> showActivityPopup, Func<Task> removeActivityPopup)
         {
             _showSearchDetailPage = showSearchDetailPage;
             _syncService = syncService;
@@ -55,6 +57,9 @@ namespace OutlookCalender.ViewModels
             SetInternetConnection();
             Connectivity.ConnectivityChanged += Connectivity_ConnectivityChanged;
             SearchResultSelectionChangedCommand = new Command<SearchResult>(SearchResultSelectionChanged);
+            _removeActivityPopup = removeActivityPopup;
+            _showActivityPopup = showActivityPopup;
+            _syncService.AfterLogin =  () => Device.BeginInvokeOnMainThread(async () => await _showActivityPopup("downloading calendar entries ...")); 
         }
 
         private void SearchResultSelectionChanged(SearchResult item)
@@ -75,9 +80,10 @@ namespace OutlookCalender.ViewModels
 
         private void OnSyncDone()
         {
-            Device.BeginInvokeOnMainThread(() => {
+            Device.BeginInvokeOnMainThread( async () => {
                 SyncCommand.IsEnabled = true;
                 LoginHintEnabled = true;
+                await _removeActivityPopup();
             });
         }
 

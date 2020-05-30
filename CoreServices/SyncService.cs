@@ -16,6 +16,8 @@ namespace CoreServices
         private GraphServiceClient _client;
         private readonly IClientService _clientService;
 
+        public Action AfterLogin { set; private get; }
+
         public SyncService(IRepository repository, IClientService clientService)
         {
             _repository = repository;
@@ -32,6 +34,7 @@ namespace CoreServices
                 new QueryOption("EndDateTime",endDate.ToUniversalTime().ToString("o")),
                 new QueryOption("$top", "10000")
             };
+            AfterLogin?.Invoke();
             return await _client.Me.CalendarView.Request(queryOptions).GetAsync();
         }
 

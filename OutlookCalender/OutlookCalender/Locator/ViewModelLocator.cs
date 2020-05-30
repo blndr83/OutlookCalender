@@ -8,6 +8,7 @@ namespace OutlookCalender.Locator
         private readonly IContainer _container;
 
         public static ViewModelLocator Instance { get; private set; }
+        public ActivityPopupViewModel ActivityPopupViewModel { get; }
 
         public static void CreateInstance(IContainer container)
         {
@@ -19,6 +20,7 @@ namespace OutlookCalender.Locator
         private ViewModelLocator(IContainer container)
         {
             _container = container;
+            ActivityPopupViewModel = new ActivityPopupViewModel();
         }
 
         public  T GetViewModel<T>() where T : ViewModelBase

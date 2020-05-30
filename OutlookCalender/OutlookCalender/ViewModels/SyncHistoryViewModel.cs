@@ -28,8 +28,10 @@ namespace OutlookCalender.ViewModels
         private readonly Func<string, Task<bool>> _displayAlert;
         private const string DeleteHistoryButtonTextStandard = "Delete History";
         private const string DeleteHistoryButtonTextFiltered = "Delete filtered History";
+        private readonly Func<string, Task> _showActivityPopup;
+        private readonly Func<Task> _removeActivityPopup;
 
-        public SyncHistoryViewModel(IRepository repository, Func<string, Task<bool>> displayAlert)
+        public SyncHistoryViewModel(IRepository repository, Func<string, Task<bool>> displayAlert, Func<string, Task> showActivityPopup, Func<Task> removeActivityPopup)
         {
             _repository = repository;
             ApplyFilterCommand = new RelayCommand(ApplyFilter);
@@ -42,6 +44,8 @@ namespace OutlookCalender.ViewModels
             DeleteHistoryButtonText = DeleteHistoryButtonTextStandard;
             StartDate = DateTime.Today;
             EndDate = DateTime.Today;
+            _removeActivityPopup = removeActivityPopup;
+            _showActivityPopup = showActivityPopup;
         }
 
         private void OnFilterDateChanged(DateTime oldValue)
@@ -82,12 +86,14 @@ namespace OutlookCalender.ViewModels
             var delete = await _displayAlert(message);
             if(delete)
             {
+                await _showActivityPopup("deleting ...");
                 var itemsToDelete = UndoFilterCommand.IsEnabled ? await _repository.FindAll<SyncLog>(_ => _.StartDate <= _startDate && _.EndDate >= _endDate) : await _repository.GetAll<SyncLog>();
-                if(itemsToDelete.Any())
+                if (itemsToDelete.Any())
                 {
                     _repository.DeleteRange(itemsToDelete);
                     _syncLogsInternal.Clear();
                 }
+                if (itemsToDelete.Any() || !itemsToDelete.Any()) await _removeActivityPopup();
             }
             
         }
@@ -117,7 +123,7 @@ namespace OutlookCalender.ViewModels
                 }
                 DeleteHistoryCommand.IsEnabled = _syncLogsInternal.Any();
                 UndoFilterCommand.IsEnabled = undoFilteEnabled;
-                 DeleteHistoryButtonText = undoFilteEnabled ? DeleteHistoryButtonTextFiltered : DeleteHistoryButtonTextStandard;
+                DeleteHistoryButtonText = undoFilteEnabled ? DeleteHistoryButtonTextFiltered : DeleteHistoryButtonTextStandard;
             });
         }
 
