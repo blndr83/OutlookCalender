@@ -22,10 +22,9 @@ namespace OutlookCalender.ViewModels
         private string _searchValue;
         private bool _loginHintEnabled;
         private readonly ObservableRangeCollection<SearchResult> _searchResultsInternal;
-        private readonly Action<SearchResult> _showSearchDetailPage;
         private string _internetConnection;
-        private readonly Func<string, Task> _showActivityPopup;
-        private readonly Func<Task> _removeActivityPopup;
+        private readonly IUiService _uiService;
+ 
 
         public RelayCommand SyncCommand { get; }
         public Command<SearchResult> SearchResultSelectionChangedCommand {get;}
@@ -39,9 +38,8 @@ namespace OutlookCalender.ViewModels
         public string InternetConnection { get { return _internetConnection; } private set { SetBackingField(ref _internetConnection, value); } }
         public Action SearchResultListChanged { get; set; }
 
-        public MainViewModel(ISyncService syncService, Action<SearchResult> showSearchDetailPage, IRepository repository, Func<string, Task> showActivityPopup, Func<Task> removeActivityPopup)
+        public MainViewModel(ISyncService syncService, IRepository repository, IUiService uiService)
         {
-            _showSearchDetailPage = showSearchDetailPage;
             _syncService = syncService;
             _repository = repository;
             SyncCommand = new RelayCommand(OnSyncCommand)
@@ -57,14 +55,13 @@ namespace OutlookCalender.ViewModels
             SetInternetConnection();
             Connectivity.ConnectivityChanged += Connectivity_ConnectivityChanged;
             SearchResultSelectionChangedCommand = new Command<SearchResult>(SearchResultSelectionChanged);
-            _removeActivityPopup = removeActivityPopup;
-            _showActivityPopup = showActivityPopup;
-            _syncService.AfterLogin =  () => Device.BeginInvokeOnMainThread(async () => await _showActivityPopup("downloading calendar entries ...")); 
+            _uiService = uiService;
+            _syncService.AfterLogin =  () => Device.BeginInvokeOnMainThread(async () => await _uiService.ShowActivityPopup("downloading calendar entries ...")); 
         }
 
         private void SearchResultSelectionChanged(SearchResult item)
         {
-             if (item != null) _showSearchDetailPage(item);
+             if (item != null) _uiService.ShowSearchResult(item);
         }
 
         private void Connectivity_ConnectivityChanged(object sender, ConnectivityChangedEventArgs e)
@@ -83,7 +80,7 @@ namespace OutlookCalender.ViewModels
             Device.BeginInvokeOnMainThread( async () => {
                 SyncCommand.IsEnabled = true;
                 LoginHintEnabled = true;
-                await _removeActivityPopup();
+                await _uiService.RemoveActivityPopup();
             });
         }
 

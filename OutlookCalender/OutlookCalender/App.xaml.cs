@@ -2,6 +2,7 @@
 using OutlookCalender.Constants;
 using OutlookCalender.Locator;
 using OutlookCalender.ViewModels;
+using System;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -9,15 +10,28 @@ using Xamarin.Forms.Xaml;
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace OutlookCalender
 {
-    public partial class App : Application
+    public partial class App : Application, IUiService
     {
         public static object UiParent { set { UiParentProvider.UiParent = value; } }
+
+        public Action<SearchResult> ShowSearchResult { get; }
+
+        public Func<string, Task<bool>> DisplayAlert { get; }
+
+        public Func<string, Task> ShowActivityPopup { get; }
+
+        public Func<Task> RemoveActivityPopup { get; }
+
         private readonly ActivityPopup _activityPopup;
 
         public App()
         {
             SQLitePCL.Batteries_V2.Init();
-            ViewModelLocator.CreateInstance(ContainerConfig.Configurate(ShowSearchDetailsPage, ShowAlert, ShowActivityPopup, RemoveActivityPopup));
+            ShowSearchResult = ShowSearchDetailsPage;
+            DisplayAlert = ShowAlert;
+            RemoveActivityPopup = OnRemoveActivityPopup;
+            ShowActivityPopup = OnShowActivityPopup;
+            ViewModelLocator.CreateInstance(ContainerConfig.Configurate(this));
             InitializeComponent();
             MainPage = new AppShell();
             _activityPopup = new ActivityPopup();
@@ -34,13 +48,13 @@ namespace OutlookCalender
             return Shell.Current.DisplayAlert("", message, "Yes", "No");
         }
 
-        private Task ShowActivityPopup(string text)
+        private Task OnShowActivityPopup(string text)
         {
             ViewModelLocator.Instance.ActivityPopupViewModel.Text = text;
             return Rg.Plugins.Popup.Services.PopupNavigation.Instance.PushAsync(_activityPopup);
         }
 
-        private Task RemoveActivityPopup()
+        private Task OnRemoveActivityPopup()
         {
             return Rg.Plugins.Popup.Services.PopupNavigation.Instance.RemovePageAsync(_activityPopup);
         }

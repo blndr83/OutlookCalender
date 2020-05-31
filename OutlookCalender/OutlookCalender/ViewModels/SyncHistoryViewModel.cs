@@ -25,13 +25,11 @@ namespace OutlookCalender.ViewModels
         private DateTime _startDate;
         private DateTime _endDate;
         private string _deleteHistoryButtonText;
-        private readonly Func<string, Task<bool>> _displayAlert;
         private const string DeleteHistoryButtonTextStandard = "Delete History";
         private const string DeleteHistoryButtonTextFiltered = "Delete filtered History";
-        private readonly Func<string, Task> _showActivityPopup;
-        private readonly Func<Task> _removeActivityPopup;
+        private readonly IUiService _uiService;
 
-        public SyncHistoryViewModel(IRepository repository, Func<string, Task<bool>> displayAlert, Func<string, Task> showActivityPopup, Func<Task> removeActivityPopup)
+        public SyncHistoryViewModel(IRepository repository, IUiService uiService)
         {
             _repository = repository;
             ApplyFilterCommand = new RelayCommand(ApplyFilter);
@@ -40,12 +38,10 @@ namespace OutlookCalender.ViewModels
             _syncLogsInternal = new ObservableRangeCollection<SyncLog>();
             SyncLogs = new ReadOnlyObservableCollection<SyncLog>(_syncLogsInternal);
             DeleteHistoryCommand = new AsyncRelayCommand(DeleteHistory);
-            _displayAlert = displayAlert;
             DeleteHistoryButtonText = DeleteHistoryButtonTextStandard;
             StartDate = DateTime.Today;
             EndDate = DateTime.Today;
-            _removeActivityPopup = removeActivityPopup;
-            _showActivityPopup = showActivityPopup;
+            _uiService = uiService;
         }
 
         private void OnFilterDateChanged(DateTime oldValue)
@@ -83,17 +79,17 @@ namespace OutlookCalender.ViewModels
             const string filtered = "filtered";
             const string complete = "complete";
             var message = $"Do you realy want to delete the {(UndoFilterCommand.IsEnabled ? filtered : complete)} History";
-            var delete = await _displayAlert(message);
+            var delete = await _uiService.DisplayAlert(message);
             if(delete)
             {
-                await _showActivityPopup("deleting ...");
+                await _uiService.ShowActivityPopup("deleting ...");
                 var itemsToDelete = UndoFilterCommand.IsEnabled ? await _repository.FindAll<SyncLog>(_ => _.StartDate <= _startDate && _.EndDate >= _endDate) : await _repository.GetAll<SyncLog>();
                 if (itemsToDelete.Any())
                 {
                     _repository.DeleteRange(itemsToDelete);
                     _syncLogsInternal.Clear();
                 }
-                if (itemsToDelete.Any() || !itemsToDelete.Any()) await _removeActivityPopup();
+                if (itemsToDelete.Any() || !itemsToDelete.Any()) await _uiService.RemoveActivityPopup();
             }
             
         }
@@ -104,7 +100,7 @@ namespace OutlookCalender.ViewModels
             Device.BeginInvokeOnMainThread(async () =>
             {
                 var syncLog = _syncLogsInternal.SingleOrDefault(_ => _.Id == id);
-                var delete = await _displayAlert($"Do you realy want to delete the Log Entry with sync the range {syncLog.StartDate.ToShortDateString()} - {syncLog.EndDate.ToShortDateString()} that was done on {syncLog.SyncDate.ToShortDateString()}");
+                var delete = await _uiService.DisplayAlert($"Do you realy want to delete the Log Entry with sync the range {syncLog.StartDate.ToShortDateString()} - {syncLog.EndDate.ToShortDateString()} that was done on {syncLog.SyncDate.ToShortDateString()}");
                 if(delete)
                 {
                     _syncLogsInternal.Remove(syncLog);

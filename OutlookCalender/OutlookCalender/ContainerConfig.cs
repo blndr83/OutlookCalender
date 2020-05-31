@@ -9,15 +9,11 @@ namespace OutlookCalender
 {
     public class ContainerConfig
     {
-        public static IContainer Configurate(Action<SearchResult> showSearchResult, Func<string, Task<bool>> displayAlert,
-            Func<string, Task> showActivityPopup, Func<Task> removeActivityPopup)
+        public static IContainer Configurate(IUiService uiService)
         {
             var builder = new ContainerBuilder();
 
-            builder.RegisterInstance(removeActivityPopup);
-            builder.RegisterInstance(showSearchResult);
-            builder.RegisterInstance(displayAlert);
-            builder.RegisterInstance(showActivityPopup);
+            builder.RegisterInstance(uiService);
             builder.RegisterType<ClientService>().As<IClientService>().SingleInstance();
             builder.RegisterType<MainViewModel>().SingleInstance();
             builder.RegisterType<SyncService>().As<ISyncService>().SingleInstance();
