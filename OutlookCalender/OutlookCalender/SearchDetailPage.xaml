@@ -9,29 +9,27 @@
         </ResourceDictionary>
     </ContentPage.Resources>
     <ContentPage.Content>
-        <ScrollView>
-            <Grid Style="{StaticResource gridStyle}" Padding="10,10,10,0">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Label Text="Start" Grid.Row="0" Grid.Column="0"/>
-                <Label Text="{Binding Start, Converter={StaticResource dateTimeToString}}" Grid.Row="0" Grid.Column="1"/>
-                <Label Text="End" Grid.Row="1" Grid.Column="0"/>
-                <Label Text="{Binding End, Converter={StaticResource dateTimeToString}}" Grid.Row="1" Grid.Column="1"/>
-                <Label Text="Location" Grid.Row="2" Grid.Column="0"/>
-                <Label Text="{Binding LocationDisplayName}" Grid.Row="2" Grid.Column="1"/>
-                <Label Text="Subject" Grid.Row="3" Grid.Column="0"/>
-                <Label Text="{Binding Subject}" Grid.Row="3" Grid.Column="1"/>
-                <WebView Source="{Binding BodyContent, Converter={StaticResource htmlConverter}}" Grid.Row="4" Grid.ColumnSpan="2" />
-            </Grid>
-        </ScrollView>
+        <Grid Style="{StaticResource gridStyle}" Padding="10,10,10,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Label Text="Start" Grid.Row="0" Grid.Column="0"/>
+            <Label Text="{Binding Start, Converter={StaticResource dateTimeToString}}" Grid.Row="0" Grid.Column="1"/>
+            <Label Text="End" Grid.Row="1" Grid.Column="0"/>
+            <Label Text="{Binding End, Converter={StaticResource dateTimeToString}}" Grid.Row="1" Grid.Column="1"/>
+            <Label Text="Location" Grid.Row="2" Grid.Column="0"/>
+            <Label Text="{Binding LocationDisplayName}" Grid.Row="2" Grid.Column="1"/>
+            <Label Text="Subject" Grid.Row="3" Grid.Column="0"/>
+            <Label Text="{Binding Subject}" Grid.Row="3" Grid.Column="1"/>
+            <WebView Source="{Binding BodyContent, Converter={StaticResource htmlConverter}}" Grid.Row="4" Grid.ColumnSpan="2" />
+        </Grid>
     </ContentPage.Content>
 </ContentPage>
