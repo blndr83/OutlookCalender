@@ -25,7 +25,7 @@ namespace OutlookCalender.Droid
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             global::Xamarin.Forms.FormsMaterial.Init(this, savedInstanceState);
-            LoadApplication(new App());
+            LoadApplication(new App(new AppDrive()));
             App.UiParent = this;
         }
 

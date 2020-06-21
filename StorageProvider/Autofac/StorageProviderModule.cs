@@ -20,6 +20,7 @@ namespace StorageProvider.Autofac
 
             builder.RegisterType<CalendarDbContext>().AsSelf().SingleInstance();
             builder.RegisterType<Repository>().As<IRepository>().SingleInstance();
+            builder.RegisterType<DataSourceProvider>().As<IDataSourceProvider>().SingleInstance();
         }
     }
 }

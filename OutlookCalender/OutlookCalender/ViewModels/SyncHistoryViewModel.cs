@@ -78,7 +78,7 @@ namespace OutlookCalender.ViewModels
         {
             const string filtered = "filtered";
             const string complete = "complete";
-            var message = $"Do you realy want to delete the {(UndoFilterCommand.IsEnabled ? filtered : complete)} History";
+            var message = $"Do you realy want to delete the {(UndoFilterCommand.IsEnabled ? filtered : complete)} History?";
             var delete = await _uiService.DisplayAlert(message);
             if(delete)
             {
@@ -100,7 +100,7 @@ namespace OutlookCalender.ViewModels
             Device.BeginInvokeOnMainThread(async () =>
             {
                 var syncLog = _syncLogsInternal.SingleOrDefault(_ => _.Id == id);
-                var delete = await _uiService.DisplayAlert($"Do you realy want to delete the Log Entry with sync the range {syncLog.StartDate.ToShortDateString()} - {syncLog.EndDate.ToShortDateString()} that was done on {syncLog.SyncDate.ToShortDateString()}");
+                var delete = await _uiService.DisplayAlert($"Do you realy want to delete the Log Entry with sync the range {syncLog.StartDate.ToShortDateString()} - {syncLog.EndDate.ToShortDateString()} that was done on {syncLog.SyncDate.ToShortDateString()}?");
                 if(delete)
                 {
                     _syncLogsInternal.Remove(syncLog);

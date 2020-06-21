@@ -63,6 +63,7 @@
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="AppDrive.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
     <None Include="Entitlements.plist" />
@@ -130,6 +131,10 @@
     <PackageReference Include="Xamarin.Essentials" Version="1.5.3.1" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\FileSystemInterfaces\FileSystemInterfaces.csproj">
+      <Project>{D23CDB42-89C1-4419-BB5B-077A8F7479FE}</Project>
+      <Name>FileSystemInterfaces</Name>
+    </ProjectReference>
     <ProjectReference Include="..\OutlookCalender\OutlookCalender.csproj">
       <Project>{6160F84D-7A65-4B50-9381-825F94F9AD61}</Project>
       <Name>OutlookCalender</Name>

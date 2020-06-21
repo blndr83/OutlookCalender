@@ -78,6 +78,7 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppDrive.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -122,6 +123,10 @@
     <Folder Include="Resources\drawable\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\FileSystemInterfaces\FileSystemInterfaces.csproj">
+      <Project>{D23CDB42-89C1-4419-BB5B-077A8F7479FE}</Project>
+      <Name>FileSystemInterfaces</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\StorageProvider\StorageProvider.csproj">
       <Project>{11e92d56-36e3-4d06-b751-dbdcd12bb302}</Project>
       <Name>StorageProvider</Name>

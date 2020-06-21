@@ -21,7 +21,7 @@ namespace OutlookCalender.UWP
         {
             this.InitializeComponent();
 
-            LoadApplication(new OutlookCalender.App());
+            LoadApplication(new OutlookCalender.App(new AppDrive()));
         }
     }
 }

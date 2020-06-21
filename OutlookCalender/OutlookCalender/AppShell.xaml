@@ -23,6 +23,15 @@
                 <views:SyncHistoryPage/>
             </ShellContent>
         </Tab>
+        <Tab Title="Info">
+            <Tab.Icon>
+                <FontImageSource FontFamily="{StaticResource FontAwesomeSolid}" Size="24" Glyph="{x:Static constants:FontAwesomeIcons.Info}">
+                </FontImageSource>
+            </Tab.Icon>
+            <ShellContent>
+                <views:InfoPage/>
+            </ShellContent>
+        </Tab>
     </TabBar>
 
 </Shell>

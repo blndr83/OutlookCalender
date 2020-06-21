@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\CoreServices\CoreServices.csproj" />
+    <ProjectReference Include="..\..\FileSystemInterfaces\FileSystemInterfaces.csproj" />
     <ProjectReference Include="..\..\Models\Models.csproj" />
     <ProjectReference Include="..\..\StorageProvider\StorageProvider.csproj" />
   </ItemGroup>
@@ -28,6 +29,9 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="AppShell.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="InfoPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="SearchDetailPage.xaml">

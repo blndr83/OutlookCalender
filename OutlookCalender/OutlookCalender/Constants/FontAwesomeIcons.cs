@@ -5,5 +5,6 @@
         public const string Home = "\uf015";
         public const string History = "\uf1da";
         public const string Trash = "\uf2ed";
+        public const string Info = "\uf05a";
     }
 }

@@ -25,7 +25,7 @@ namespace OutlookCalender.iOS
         {
             DataSourceProvider.SetDbPath(System.Environment.GetFolderPath(System.Environment.SpecialFolder.LocalApplicationData));
             global::Xamarin.Forms.Forms.Init();
-            LoadApplication(new App());
+            LoadApplication(new App(new AppDrive()));
 
             return base.FinishedLaunching(app, options);
         }

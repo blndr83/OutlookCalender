@@ -17,6 +17,11 @@ namespace StorageProvider
             _calendarDbContext = calendarDbContext;
         }
 
+        public Task<int> Count<T>() where T : Entity
+        {
+            return _calendarDbContext.Set<T>().AsNoTracking().CountAsync();
+        }
+
         public void Delete<T>(T entity) where T : Entity
         {
             _calendarDbContext.Remove(entity);

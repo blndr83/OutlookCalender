@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="OutlookCalender.InfoPage">
+    <ContentPage.Content>
+        <Grid Padding="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Label Text="App Drive Info" Style="{StaticResource syncHistoryLabelStyle}" FontAttributes="Bold" TextDecorations="Underline" Grid.Row="0" Grid.ColumnSpan="2"/>
+            <Label Text="App Drive Free Space" Style="{StaticResource syncHistoryLabelStyle}"  Grid.Row="1" Grid.Column="0"/>
+            <Label Text="{Binding FreeInternalDiskSpace}" Style="{StaticResource syncHistoryLabelStyle}" Grid.Row="1" Grid.Column="1"/>
+            <Label Text="App Database Info" Style="{StaticResource syncHistoryLabelStyle}" FontAttributes="Bold" TextDecorations="Underline" Grid.Row="2" Grid.ColumnSpan="2"/>
+            <Label Text="Database size" Style="{StaticResource syncHistoryLabelStyle}" Grid.Row="3" Grid.Column="0"/>
+            <Label Text="{Binding DatabaseSize}" Style="{StaticResource syncHistoryLabelStyle}" Grid.Row="3" Grid.Column="1"/>
+            <Label Text="Amount Of Calendar Entries" Style="{StaticResource syncHistoryLabelStyle}"  Grid.Row="4" Grid.Column="0"/>
+            <Label Text="{Binding AmountOfCalendarEntries}" Style="{StaticResource syncHistoryLabelStyle}" Grid.Row="4" Grid.Column="1"/>
+            <Label Text="Amount Of Sync Logs" Style="{StaticResource syncHistoryLabelStyle}"  Grid.Row="5" Grid.Column="0"/>
+            <Label Text="{Binding AmountOfSyncLogs}" Style="{StaticResource syncHistoryLabelStyle}" Grid.Row="5" Grid.Column="1"/>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

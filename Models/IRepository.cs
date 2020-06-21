@@ -14,5 +14,6 @@ namespace Models
         T Find<T>(Expression<Func<T, bool>> expression) where T : Entity;
         Task<List<T>> FindAll<T>(Expression<Func<T, bool>> expression) where T : Entity;
         Task<List<T>> GetAll<T>() where T : Entity;
+        Task<int> Count<T>() where T : Entity;
     }
 }

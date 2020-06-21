@@ -1,4 +1,5 @@
 ﻿using CoreServices;
+using FileSystemInterfaces;
 using OutlookCalender.Constants;
 using OutlookCalender.Locator;
 using OutlookCalender.ViewModels;
@@ -24,14 +25,14 @@ namespace OutlookCalender
 
         private readonly ActivityPopup _activityPopup;
 
-        public App()
+        public App(IAppDrive appDrive)
         {
             SQLitePCL.Batteries_V2.Init();
             ShowSearchResult = ShowSearchDetailsPage;
             DisplayAlert = ShowAlert;
             RemoveActivityPopup = OnRemoveActivityPopup;
             ShowActivityPopup = OnShowActivityPopup;
-            ViewModelLocator.CreateInstance(ContainerConfig.Configurate(this));
+            ViewModelLocator.CreateInstance(ContainerConfig.Configurate(this, appDrive));
             InitializeComponent();
             MainPage = new AppShell();
             _activityPopup = new ActivityPopup();

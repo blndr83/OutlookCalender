@@ -92,6 +92,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="AppDrive.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -156,6 +157,10 @@
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform" Version="6.2.10" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\FileSystemInterfaces\FileSystemInterfaces.csproj">
+      <Project>{D23CDB42-89C1-4419-BB5B-077A8F7479FE}</Project>
+      <Name>FileSystemInterfaces</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\StorageProvider\StorageProvider.csproj">
       <Project>{11e92d56-36e3-4d06-b751-dbdcd12bb302}</Project>
       <Name>StorageProvider</Name>
