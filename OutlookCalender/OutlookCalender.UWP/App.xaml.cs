@@ -48,7 +48,8 @@ namespace OutlookCalender.UWP
                 rootFrame = new Frame();
 
                 rootFrame.NavigationFailed += OnNavigationFailed;
-                global::Xamarin.Forms.Forms.SetFlags("Shell_UWP_Experimental");
+                Rg.Plugins.Popup.Popup.Init();
+                global::Xamarin.Forms.Forms.SetFlags("Shell_UWP_Experimental"); 
                 Xamarin.Forms.Forms.Init(e);
 
                 if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
